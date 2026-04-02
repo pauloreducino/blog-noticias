@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --base: #060b18;
+  --surface: #0c1424;
+  --elevated: #111d35;
+  --cyan: #00c8e8;
+  --red-news: #ff3b5c;
+  --amber-news: #f5a100;
+  --green-live: #00e08a;
+  --text-primary: #edf2ff;
+  --text-secondary: #b8c5e0;
+  --text-muted: #7b8db8;
+  --border-cyan: rgba(0, 200, 232, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--base);
+  color: var(--text-primary);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--elevated);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan);
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 200, 232, 0.25);
+  color: var(--text-primary);
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Skeleton */
+.skeleton {
+  background: linear-gradient(90deg, #0c1424 25%, #111d35 50%, #0c1424 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease infinite;
+}
+
+/* Grid pattern overlay */
+.grid-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300C8E8' fill-opacity='0.025'%3E%3Cpath d='M0 0h1v40H0zm39 0h1v40h-1zM0 0v1h40V0zm0 39v1h40v-1z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Prose styles for article content */
+.article-prose {
+  color: var(--text-secondary);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+.article-prose h2,
+.article-prose h3,
+.article-prose h4,
+.article-prose h5,
+.article-prose h6 {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 2rem 0 0.75rem;
+  scroll-margin-top: 2rem;
+}
+.article-prose h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1rem;
+  letter-spacing: -0.02em;
+}
+.article-prose p {
+  margin-bottom: 1.4rem;
+}
+.article-prose a {
+  color: var(--cyan);
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 200, 232, 0.3);
+  text-underline-offset: 3px;
+  transition:
+    color 0.2s,
+    text-decoration-color 0.2s;
+}
+.article-prose a:hover {
+  text-decoration-color: var(--cyan);
+}
+.article-prose strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+.article-prose blockquote {
+  border-left: 3px solid var(--cyan);
+  background: var(--surface);
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--text-muted);
+}
+.article-prose ul,
+.article-prose ol {
+  margin: 1.2rem 0 1.2rem 1.5rem;
+}
+.article-prose li {
+  margin-bottom: 0.5rem;
+}
+.article-prose ul li::marker {
+  color: var(--cyan);
+}
+.article-prose img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+}
+
+/* Ticker pause on hover */
+.ticker-track:hover .ticker-inner {
+  animation-play-state: paused;
+}
+
+/* Category color vars per category */
+.cat-politica {
+  --cat-color: #ff3b5c;
+}
+.cat-economia {
+  --cat-color: #f5a100;
+}
+.cat-seguranca {
+  --cat-color: #ff5c20;
+}
+.cat-cultura-lazer {
+  --cat-color: #a855f7;
+}
+.cat-educacao {
+  --cat-color: #00c8e8;
+}
+.cat-esportes {
+  --cat-color: #00e08a;
+}
+.cat-tecnologia {
+  --cat-color: #3b82f6;
+}
+.cat-saude {
+  --cat-color: #ec4899;
+}
+.cat-meio-ambiente {
+  --cat-color: #22c55e;
+}
+.cat-transito {
+  --cat-color: #eab308;
+}
+.cat-brasil-mundo {
+  --cat-color: #7b8db8;
+}
+.cat-opiniao {
+  --cat-color: #f5a100;
+}
