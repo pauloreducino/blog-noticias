@@ -40,6 +40,7 @@ export interface Article {
     name: string;
     slug: string;
     color: string;
+    icon?: string;
   };
   author: {
     id: string;

@@ -1,15 +1,23 @@
 import Link from "next/link";
-import { articles } from "@/data/articles";
+import { useCMS } from "@/contexts/CMSContext";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
 export function RecentArticles() {
+  const { articles, deleteArticle } = useCMS();
+
   const recentArticles = articles
     .sort(
       (a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
     )
     .slice(0, 5);
+
+  const handleDelete = async (articleId: string, title: string) => {
+    if (confirm(`Tem certeza que deseja excluir o artigo "${title}"?`)) {
+      deleteArticle(articleId);
+    }
+  };
 
   return (
     <div className="bg-surface border border-white/5 rounded-xl p-6">
@@ -32,7 +40,7 @@ export function RecentArticles() {
             className="flex items-center gap-4 p-3 rounded-lg hover:bg-elevated transition-colors"
           >
             <div className="w-12 h-12 rounded-lg bg-elevated flex items-center justify-center text-cyan text-lg">
-              {article.category.icon}
+              {article.category.icon || "📄"}
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="font-body font-medium text-text-primary truncate mb-1">
@@ -52,10 +60,18 @@ export function RecentArticles() {
               </div>
             </div>
             <div className="flex gap-2">
-              <button className="p-2 text-text-muted hover:text-cyan transition-colors">
+              <Link
+                href={`/admin/artigos/novo?edit=${article.id}`}
+                className="p-2 text-text-muted hover:text-cyan transition-colors"
+                title="Editar"
+              >
                 ✏️
-              </button>
-              <button className="p-2 text-text-muted hover:text-red-news transition-colors">
+              </Link>
+              <button
+                onClick={() => handleDelete(article.id, article.title)}
+                className="p-2 text-text-muted hover:text-red-news transition-colors"
+                title="Excluir"
+              >
                 🗑️
               </button>
             </div>
