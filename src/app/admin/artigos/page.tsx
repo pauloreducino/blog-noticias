@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import { AdminLayout } from '@/components/admin/AdminLayout';
-import { ArticlesList } from '@/components/admin/ArticlesList';
+import type { Metadata } from "next";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import { ArticlesList } from "@/components/admin/ArticlesList";
 
 export const metadata: Metadata = {
-  title: 'Gerenciar Artigos | São Luís em Foco',
-  description: 'Gerencie todos os artigos do portal São Luís em Foco',
+  title: "Gerenciar Artigos | São Luís em Foco",
+  description: "Gerencie todos os artigos do portal São Luís em Foco",
 };
 
 export default function ArticlesPage() {

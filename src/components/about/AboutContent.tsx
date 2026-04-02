@@ -9,13 +9,21 @@ export function AboutContent() {
           </h2>
           <div className="space-y-4 font-body text-text-secondary leading-relaxed">
             <p>
-              São Luís em Foco é o principal portal de jornalismo digital de São Luís e Maranhão. Fundado com o compromisso de trazer informação de qualidade, verificada e relevante para a população maranhense.
+              São Luís em Foco é o principal portal de jornalismo digital de São
+              Luís e Maranhão. Fundado com o compromisso de trazer informação de
+              qualidade, verificada e relevante para a população maranhense.
             </p>
             <p>
-              Nossa equipe é composta por jornalistas experientes, colunistas e colaboradores que trabalham diariamente para trazer as histórias que importam, dos bastidores da política às histórias de gente comum que fazem nossa cidade diferente.
+              Nossa equipe é composta por jornalistas experientes, colunistas e
+              colaboradores que trabalham diariamente para trazer as histórias
+              que importam, dos bastidores da política às histórias de gente
+              comum que fazem nossa cidade diferente.
             </p>
             <p>
-              Cobrimos política, economia, cultura, esportes, educação, tecnologia e muito mais. Estamos presentes nas redes sociais e em eventos importantes da cidade, sempre buscando estar onde estão as notícias.
+              Cobrimos política, economia, cultura, esportes, educação,
+              tecnologia e muito mais. Estamos presentes nas redes sociais e em
+              eventos importantes da cidade, sempre buscando estar onde estão as
+              notícias.
             </p>
           </div>
         </div>
@@ -23,10 +31,10 @@ export function AboutContent() {
         {/* Stats */}
         <div className="grid grid-cols-2 gap-6">
           {[
-            { value: '500K+', label: 'Leitores Mensais' },
-            { value: '50+', label: 'Colaboradores' },
-            { value: '100%', label: 'Compromisso com Verdade' },
-            { value: '24/7', label: 'Cobertura Contínua' },
+            { value: "500K+", label: "Leitores Mensais" },
+            { value: "50+", label: "Colaboradores" },
+            { value: "100%", label: "Compromisso com Verdade" },
+            { value: "24/7", label: "Cobertura Contínua" },
           ].map((stat) => (
             <div
               key={stat.label}
@@ -51,22 +59,28 @@ export function AboutContent() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              title: 'Verificação',
-              description: 'Cada informação é verificada rigorosamente antes de ser publicada. Não publicamos sem ter certeza.',
-              icon: '✓',
+              title: "Verificação",
+              description:
+                "Cada informação é verificada rigorosamente antes de ser publicada. Não publicamos sem ter certeza.",
+              icon: "✓",
             },
             {
-              title: 'Transparência',
-              description: 'Nossas fontes são claras, nossos posicionamentos são explícitos e estamos abertos ao diálogo.',
-              icon: '◇',
+              title: "Transparência",
+              description:
+                "Nossas fontes são claras, nossos posicionamentos são explícitos e estamos abertos ao diálogo.",
+              icon: "◇",
             },
             {
-              title: 'Independência',
-              description: 'Somos independentes e cobertos apenas pelos nossos valores jornalísticos e pela verdade.',
-              icon: '☆',
+              title: "Independência",
+              description:
+                "Somos independentes e cobertos apenas pelos nossos valores jornalísticos e pela verdade.",
+              icon: "☆",
             },
           ].map((value) => (
-            <div key={value.title} className="bg-surface border border-white/5 rounded-xl p-8 hover:border-cyan/30 transition-all">
+            <div
+              key={value.title}
+              className="bg-surface border border-white/5 rounded-xl p-8 hover:border-cyan/30 transition-all"
+            >
               <div className="text-4xl text-cyan mb-4">{value.icon}</div>
               <h3 className="font-headline font-bold text-xl text-text-primary mb-3">
                 {value.title}
@@ -85,7 +99,9 @@ export function AboutContent() {
           Conheca a <span className="text-cyan">Equipe</span>
         </h2>
         <p className="font-body text-text-secondary text-center max-w-2xl mx-auto mb-12">
-          Profissionais dedicados ao jornalismo de qualidade, à informação verificada e ao compromisso com a verdade. Conheça quem trabalha nos bastidores do São Luís em Foco.
+          Profissionais dedicados ao jornalismo de qualidade, à informação
+          verificada e ao compromisso com a verdade. Conheça quem trabalha nos
+          bastidores do São Luís em Foco.
         </p>
       </div>
     </section>

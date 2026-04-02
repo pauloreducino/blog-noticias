@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import { AdminLayout } from '@/components/admin/AdminLayout';
-import { AnalyticsDashboard } from '@/components/admin/AnalyticsDashboard';
+import type { Metadata } from "next";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import { AnalyticsDashboard } from "@/components/admin/AnalyticsDashboard";
 
 export const metadata: Metadata = {
-  title: 'Analytics | São Luís em Foco',
-  description: 'Estatísticas e métricas do portal São Luís em Foco',
+  title: "Analytics | São Luís em Foco",
+  description: "Estatísticas e métricas do portal São Luís em Foco",
 };
 
 export default function AnalyticsPage() {

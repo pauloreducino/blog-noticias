@@ -1,27 +1,31 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { categories } from '@/data/categories';
-import { authors } from '@/data/authors';
+import { useState } from "react";
+import { categories } from "@/data/categories";
+import { authors } from "@/data/authors";
 
 export function ArticleForm() {
   const [formData, setFormData] = useState({
-    title: '',
-    slug: '',
-    excerpt: '',
-    content: '',
-    categoryId: '',
-    authorId: '',
-    imageUrl: '',
-    imageAlt: '',
-    tags: '',
+    title: "",
+    slug: "",
+    excerpt: "",
+    content: "",
+    categoryId: "",
+    authorId: "",
+    imageUrl: "",
+    imageAlt: "",
+    tags: "",
     featured: false,
     breaking: false,
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { name, value, type } = e.target;
-    const isCheckbox = type === 'checkbox';
+    const isCheckbox = type === "checkbox";
 
     setFormData((prev) => ({
       ...prev,
@@ -31,7 +35,7 @@ export function ArticleForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Article data:', formData);
+    console.log("Article data:", formData);
     // Aqui seria implementada a lógica para salvar no CMS
   };
 
@@ -42,7 +46,10 @@ export function ArticleForm() {
         <div className="lg:col-span-2 space-y-6">
           {/* Title */}
           <div>
-            <label htmlFor="title" className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+            <label
+              htmlFor="title"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
               Título do Artigo
             </label>
             <input
@@ -59,7 +66,10 @@ export function ArticleForm() {
 
           {/* Slug */}
           <div>
-            <label htmlFor="slug" className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+            <label
+              htmlFor="slug"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
               Slug (URL)
             </label>
             <input
@@ -76,7 +86,10 @@ export function ArticleForm() {
 
           {/* Excerpt */}
           <div>
-            <label htmlFor="excerpt" className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+            <label
+              htmlFor="excerpt"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
               Resumo (Excerpt)
             </label>
             <textarea
@@ -93,7 +106,10 @@ export function ArticleForm() {
 
           {/* Content */}
           <div>
-            <label htmlFor="content" className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+            <label
+              htmlFor="content"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
               Conteúdo (HTML)
             </label>
             <textarea
@@ -110,7 +126,10 @@ export function ArticleForm() {
 
           {/* Tags */}
           <div>
-            <label htmlFor="tags" className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+            <label
+              htmlFor="tags"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
               Tags (separadas por vírgula)
             </label>
             <input
@@ -129,7 +148,10 @@ export function ArticleForm() {
         <div className="space-y-6">
           {/* Category */}
           <div>
-            <label htmlFor="categoryId" className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+            <label
+              htmlFor="categoryId"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
               Categoria
             </label>
             <select
@@ -151,7 +173,10 @@ export function ArticleForm() {
 
           {/* Author */}
           <div>
-            <label htmlFor="authorId" className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+            <label
+              htmlFor="authorId"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
               Autor
             </label>
             <select
@@ -173,7 +198,10 @@ export function ArticleForm() {
 
           {/* Image URL */}
           <div>
-            <label htmlFor="imageUrl" className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+            <label
+              htmlFor="imageUrl"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
               URL da Imagem
             </label>
             <input
@@ -189,7 +217,10 @@ export function ArticleForm() {
 
           {/* Image Alt */}
           <div>
-            <label htmlFor="imageAlt" className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+            <label
+              htmlFor="imageAlt"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
               Descrição da Imagem
             </label>
             <input
@@ -217,7 +248,9 @@ export function ArticleForm() {
                 onChange={handleChange}
                 className="w-4 h-4 accent-cyan cursor-pointer"
               />
-              <span className="font-body text-sm text-text-secondary">Artigo em Destaque</span>
+              <span className="font-body text-sm text-text-secondary">
+                Artigo em Destaque
+              </span>
             </label>
 
             <label className="flex items-center gap-3 cursor-pointer">
@@ -228,7 +261,9 @@ export function ArticleForm() {
                 onChange={handleChange}
                 className="w-4 h-4 accent-cyan cursor-pointer"
               />
-              <span className="font-body text-sm text-text-secondary">Notícia Urgente</span>
+              <span className="font-body text-sm text-text-secondary">
+                Notícia Urgente
+              </span>
             </label>
           </div>
 

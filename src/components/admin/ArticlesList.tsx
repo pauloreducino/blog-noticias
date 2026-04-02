@@ -1,8 +1,8 @@
-import { articles } from '@/data/articles';
-import { categories } from '@/data/categories';
-import { authors } from '@/data/authors';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { articles } from "@/data/articles";
+import { categories } from "@/data/categories";
+import { authors } from "@/data/authors";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 export function ArticlesList() {
   return (
@@ -59,11 +59,16 @@ export function ArticlesList() {
           </thead>
           <tbody>
             {articles.map((article) => {
-              const category = categories.find(c => c.slug === article.category.slug);
-              const author = authors.find(a => a.id === article.author.id);
+              const category = categories.find(
+                (c) => c.slug === article.category.slug,
+              );
+              const author = authors.find((a) => a.id === article.author.id);
 
               return (
-                <tr key={article.id} className="border-b border-white/5 hover:bg-elevated/50 transition-colors">
+                <tr
+                  key={article.id}
+                  className="border-b border-white/5 hover:bg-elevated/50 transition-colors"
+                >
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded bg-elevated flex items-center justify-center text-cyan text-sm">
@@ -115,7 +120,10 @@ export function ArticlesList() {
                   </td>
                   <td className="px-6 py-4">
                     <span className="font-body text-sm text-text-secondary">
-                      {formatDistanceToNow(new Date(article.publishedAt), { addSuffix: true, locale: ptBR })}
+                      {formatDistanceToNow(new Date(article.publishedAt), {
+                        addSuffix: true,
+                        locale: ptBR,
+                      })}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">

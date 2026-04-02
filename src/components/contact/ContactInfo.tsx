@@ -1,32 +1,32 @@
 export function ContactInfo() {
   const contactData = [
     {
-      icon: '📧',
-      title: 'Email Geral',
-      value: 'contato@saoluisemfoco.com.br',
-      description: 'Para dúvidas gerais e sugestões',
-      href: 'mailto:contato@saoluisemfoco.com.br',
+      icon: "📧",
+      title: "Email Geral",
+      value: "contato@saoluisemfoco.com.br",
+      description: "Para dúvidas gerais e sugestões",
+      href: "mailto:contato@saoluisemfoco.com.br",
     },
     {
-      icon: '📋',
-      title: 'Editorial',
-      value: 'editorial@saoluisemfoco.com.br',
-      description: 'Envie sugestões de notícias',
-      href: 'mailto:editorial@saoluisemfoco.com.br',
+      icon: "📋",
+      title: "Editorial",
+      value: "editorial@saoluisemfoco.com.br",
+      description: "Envie sugestões de notícias",
+      href: "mailto:editorial@saoluisemfoco.com.br",
     },
     {
-      icon: '📢',
-      title: 'Publicidade',
-      value: '(98) 3218-9000',
-      description: 'Fale com nosso time comercial',
-      href: 'tel:+559832189000',
+      icon: "📢",
+      title: "Publicidade",
+      value: "(98) 3218-9000",
+      description: "Fale com nosso time comercial",
+      href: "tel:+559832189000",
     },
     {
-      icon: '📱',
-      title: 'Whatsapp',
-      value: '(98) 98888-5000',
-      description: 'Contato rápido via Whatsapp',
-      href: 'https://wa.me/5598988885000',
+      icon: "📱",
+      title: "Whatsapp",
+      value: "(98) 98888-5000",
+      description: "Contato rápido via Whatsapp",
+      href: "https://wa.me/5598988885000",
     },
   ];
 
@@ -37,8 +37,12 @@ export function ContactInfo() {
           <a
             key={contact.title}
             href={contact.href}
-            target={contact.href.startsWith('http') ? '_blank' : undefined}
-            rel={contact.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            target={contact.href.startsWith("http") ? "_blank" : undefined}
+            rel={
+              contact.href.startsWith("http")
+                ? "noopener noreferrer"
+                : undefined
+            }
             className="bg-surface border border-white/5 rounded-xl p-6 hover:border-cyan/30 transition-all group cursor-pointer"
           >
             <div className="text-4xl mb-4">{contact.icon}</div>
@@ -80,7 +84,8 @@ export function ContactInfo() {
                 <span className="text-text-primary">Fechado</span>
               </div>
               <p className="pt-4 text-xs italic">
-                📌 Você pode enviar mensagens a qualquer hora. Responderemos em até 24 horas úteis.
+                📌 Você pode enviar mensagens a qualquer hora. Responderemos em
+                até 24 horas úteis.
               </p>
             </div>
           </div>
@@ -91,10 +96,10 @@ export function ContactInfo() {
             </h3>
             <div className="flex gap-4 flex-wrap">
               {[
-                { name: 'Instagram', href: '#', icon: '📷' },
-                { name: 'Facebook', href: '#', icon: '👤' },
-                { name: 'Twitter', href: '#', icon: '𝕏' },
-                { name: 'LinkedIn', href: '#', icon: '💼' },
+                { name: "Instagram", href: "#", icon: "📷" },
+                { name: "Facebook", href: "#", icon: "👤" },
+                { name: "Twitter", href: "#", icon: "𝕏" },
+                { name: "LinkedIn", href: "#", icon: "💼" },
               ].map((social) => (
                 <a
                   key={social.name}

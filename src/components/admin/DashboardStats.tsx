@@ -1,35 +1,37 @@
-import { articles } from '@/data/articles';
+import { articles } from "@/data/articles";
 
 export function DashboardStats() {
   const totalArticles = articles.length;
   const totalViews = articles.reduce((sum, article) => sum + article.views, 0);
-  const featuredArticles = articles.filter(article => article.featured).length;
-  const breakingNews = articles.filter(article => article.breaking).length;
+  const featuredArticles = articles.filter(
+    (article) => article.featured,
+  ).length;
+  const breakingNews = articles.filter((article) => article.breaking).length;
 
   const stats = [
     {
-      label: 'Total de Artigos',
+      label: "Total de Artigos",
       value: totalArticles.toString(),
-      icon: '📝',
-      color: 'text-cyan',
+      icon: "📝",
+      color: "text-cyan",
     },
     {
-      label: 'Visualizações Totais',
+      label: "Visualizações Totais",
       value: totalViews.toLocaleString(),
-      icon: '👁️',
-      color: 'text-green-live',
+      icon: "👁️",
+      color: "text-green-live",
     },
     {
-      label: 'Artigos em Destaque',
+      label: "Artigos em Destaque",
       value: featuredArticles.toString(),
-      icon: '⭐',
-      color: 'text-amber-news',
+      icon: "⭐",
+      color: "text-amber-news",
     },
     {
-      label: 'Notícias Urgentes',
+      label: "Notícias Urgentes",
       value: breakingNews.toString(),
-      icon: '🚨',
-      color: 'text-red-news',
+      icon: "🚨",
+      color: "text-red-news",
     },
   ];
 
@@ -41,9 +43,7 @@ export function DashboardStats() {
           className="bg-surface border border-white/5 rounded-xl p-6 hover:border-cyan/30 transition-all"
         >
           <div className="flex items-center gap-4">
-            <div className={`text-3xl ${stat.color}`}>
-              {stat.icon}
-            </div>
+            <div className={`text-3xl ${stat.color}`}>{stat.icon}</div>
             <div>
               <div className="font-headline font-bold text-2xl text-text-primary mb-1">
                 {stat.value}

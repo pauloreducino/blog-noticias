@@ -1,14 +1,14 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
   const menuItems = [
-    { href: '/admin', label: 'Dashboard', icon: '📊' },
-    { href: '/admin/artigos', label: 'Artigos', icon: '📝' },
-    { href: '/admin/categorias', label: 'Categorias', icon: '🏷️' },
-    { href: '/admin/autores', label: 'Autores', icon: '👥' },
-    { href: '/admin/midia', label: 'Mídia', icon: '🖼️' },
-    { href: '/admin/analytics', label: 'Analytics', icon: '📈' },
-    { href: '/admin/configuracoes', label: 'Configurações', icon: '⚙️' },
+    { href: "/admin", label: "Dashboard", icon: "📊" },
+    { href: "/admin/artigos", label: "Artigos", icon: "📝" },
+    { href: "/admin/categorias", label: "Categorias", icon: "🏷️" },
+    { href: "/admin/autores", label: "Autores", icon: "👥" },
+    { href: "/admin/midia", label: "Mídia", icon: "🖼️" },
+    { href: "/admin/analytics", label: "Analytics", icon: "📈" },
+    { href: "/admin/configuracoes", label: "Configurações", icon: "⚙️" },
   ];
 
   return (
@@ -19,10 +19,14 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           {/* Logo */}
           <div className="flex items-center gap-3 p-6 border-b border-white/5">
             <div className="w-8 h-8 rounded bg-cyan flex items-center justify-center">
-              <span className="font-headline font-bold text-base text-sm">SL</span>
+              <span className="font-headline font-bold text-base text-sm">
+                SL
+              </span>
             </div>
             <div className="leading-none">
-              <div className="font-headline font-bold text-text-primary text-lg">Admin</div>
+              <div className="font-headline font-bold text-text-primary text-lg">
+                Admin
+              </div>
               <div className="font-mono text-text-muted text-[9px] tracking-[0.2em] uppercase">
                 São Luís em Foco
               </div>
@@ -61,9 +65,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
 
       {/* Main Content */}
       <div className="pl-64">
-        <main className="p-8">
-          {children}
-        </main>
+        <main className="p-8">{children}</main>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export function UploadArea() {
   const [isDragging, setIsDragging] = useState(false);
@@ -19,7 +19,7 @@ export function UploadArea() {
     e.preventDefault();
     setIsDragging(false);
     // Handle file upload logic here
-    console.log('Files dropped:', e.dataTransfer.files);
+    console.log("Files dropped:", e.dataTransfer.files);
   };
 
   return (
@@ -30,8 +30,8 @@ export function UploadArea() {
         onDrop={handleDrop}
         className={`border-2 border-dashed rounded-lg p-12 text-center transition-all ${
           isDragging
-            ? 'border-cyan bg-cyan/5'
-            : 'border-white/10 hover:border-cyan/30'
+            ? "border-cyan bg-cyan/5"
+            : "border-white/10 hover:border-cyan/30"
         }`}
       >
         <div className="text-6xl mb-4">📁</div>

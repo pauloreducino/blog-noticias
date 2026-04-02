@@ -1,22 +1,22 @@
 // Mock media data - in a real CMS this would come from a database
 const mockMedia = [
   {
-    id: '1',
-    name: 'rua-portugal-9-scaled.webp',
-    url: '/heros/rua-portugal-9-scaled.webp',
-    type: 'image',
-    size: '2.3 MB',
-    uploadedAt: '2024-01-15',
-    dimensions: '1920x1080',
+    id: "1",
+    name: "rua-portugal-9-scaled.webp",
+    url: "/heros/rua-portugal-9-scaled.webp",
+    type: "image",
+    size: "2.3 MB",
+    uploadedAt: "2024-01-15",
+    dimensions: "1920x1080",
   },
   {
-    id: '2',
-    name: 'sao-luis-ma-nitght.png',
-    url: '/heros/sao-luis-ma-nitght.png',
-    type: 'image',
-    size: '1.8 MB',
-    uploadedAt: '2024-01-14',
-    dimensions: '1600x900',
+    id: "2",
+    name: "sao-luis-ma-nitght.png",
+    url: "/heros/sao-luis-ma-nitght.png",
+    type: "image",
+    size: "1.8 MB",
+    uploadedAt: "2024-01-14",
+    dimensions: "1600x900",
   },
   // Add more mock media items as needed
 ];
@@ -48,7 +48,7 @@ export function MediaGrid() {
             className="group relative bg-elevated border border-white/5 rounded-lg overflow-hidden hover:border-cyan/30 transition-all cursor-pointer"
           >
             <div className="aspect-square bg-gradient-to-br from-cyan/20 to-cyan/5 flex items-center justify-center">
-              {media.type === 'image' ? (
+              {media.type === "image" ? (
                 <div className="text-4xl">🖼️</div>
               ) : (
                 <div className="text-4xl">🎥</div>

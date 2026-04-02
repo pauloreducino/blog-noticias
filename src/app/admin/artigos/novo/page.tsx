@@ -1,10 +1,10 @@
-import type { Metadata } from 'next';
-import { AdminLayout } from '@/components/admin/AdminLayout';
-import { ArticleForm } from '@/components/admin/ArticleForm';
+import type { Metadata } from "next";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import { ArticleForm } from "@/components/admin/ArticleForm";
 
 export const metadata: Metadata = {
-  title: 'Novo Artigo | São Luís em Foco',
-  description: 'Criar novo artigo no portal São Luís em Foco',
+  title: "Novo Artigo | São Luís em Foco",
+  description: "Criar novo artigo no portal São Luís em Foco",
 };
 
 export default function NewArticlePage() {

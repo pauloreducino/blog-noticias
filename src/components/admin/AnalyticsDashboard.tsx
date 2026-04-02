@@ -1,24 +1,22 @@
-import { articles } from '@/data/articles';
+import { articles } from "@/data/articles";
 
 export function AnalyticsDashboard() {
   // Mock analytics data - in a real CMS this would come from Google Analytics, etc.
   const totalViews = articles.reduce((sum, article) => sum + article.views, 0);
   const avgViewsPerArticle = Math.round(totalViews / articles.length);
-  const topArticles = articles
-    .sort((a, b) => b.views - a.views)
-    .slice(0, 5);
+  const topArticles = articles.sort((a, b) => b.views - a.views).slice(0, 5);
 
   const trafficData = [
-    { period: 'Hoje', views: 1247, change: '+12%' },
-    { period: 'Ontem', views: 1109, change: '+8%' },
-    { period: 'Esta semana', views: 8234, change: '+15%' },
-    { period: 'Este mês', views: 34567, change: '+22%' },
+    { period: "Hoje", views: 1247, change: "+12%" },
+    { period: "Ontem", views: 1109, change: "+8%" },
+    { period: "Esta semana", views: 8234, change: "+15%" },
+    { period: "Este mês", views: 34567, change: "+22%" },
   ];
 
   const deviceData = [
-    { device: 'Desktop', percentage: 65, color: 'bg-cyan' },
-    { device: 'Mobile', percentage: 30, color: 'bg-green-live' },
-    { device: 'Tablet', percentage: 5, color: 'bg-amber-news' },
+    { device: "Desktop", percentage: 65, color: "bg-cyan" },
+    { device: "Mobile", percentage: 30, color: "bg-green-live" },
+    { device: "Tablet", percentage: 5, color: "bg-amber-news" },
   ];
 
   return (
@@ -78,7 +76,11 @@ export function AnalyticsDashboard() {
             {deviceData.map((device) => (
               <div key={device.device} className="flex items-center gap-4">
                 <div className="w-8 h-8 bg-elevated rounded flex items-center justify-center text-lg">
-                  {device.device === 'Desktop' ? '💻' : device.device === 'Mobile' ? '📱' : '📱'}
+                  {device.device === "Desktop"
+                    ? "💻"
+                    : device.device === "Mobile"
+                      ? "📱"
+                      : "📱"}
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">

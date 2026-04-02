@@ -1,11 +1,14 @@
-import Link from 'next/link';
-import { articles } from '@/data/articles';
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import Link from "next/link";
+import { articles } from "@/data/articles";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 export function RecentArticles() {
   const recentArticles = articles
-    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+    )
     .slice(0, 5);
 
   return (
@@ -24,7 +27,10 @@ export function RecentArticles() {
 
       <div className="space-y-4">
         {recentArticles.map((article) => (
-          <div key={article.id} className="flex items-center gap-4 p-3 rounded-lg hover:bg-elevated transition-colors">
+          <div
+            key={article.id}
+            className="flex items-center gap-4 p-3 rounded-lg hover:bg-elevated transition-colors"
+          >
             <div className="w-12 h-12 rounded-lg bg-elevated flex items-center justify-center text-cyan text-lg">
               {article.category.icon}
             </div>
@@ -35,7 +41,12 @@ export function RecentArticles() {
               <div className="flex items-center gap-3 text-xs text-text-muted">
                 <span>{article.author.name}</span>
                 <span>•</span>
-                <span>{formatDistanceToNow(new Date(article.publishedAt), { addSuffix: true, locale: ptBR })}</span>
+                <span>
+                  {formatDistanceToNow(new Date(article.publishedAt), {
+                    addSuffix: true,
+                    locale: ptBR,
+                  })}
+                </span>
                 <span>•</span>
                 <span>{article.views} visualizações</span>
               </div>

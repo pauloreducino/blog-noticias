@@ -1,12 +1,12 @@
-import type { Metadata } from 'next';
-import { AdminLayout } from '@/components/admin/AdminLayout';
-import { DashboardStats } from '@/components/admin/DashboardStats';
-import { RecentArticles } from '@/components/admin/RecentArticles';
-import { QuickActions } from '@/components/admin/QuickActions';
+import type { Metadata } from "next";
+import { AdminLayout } from "@/components/admin/AdminLayout";
+import { DashboardStats } from "@/components/admin/DashboardStats";
+import { RecentArticles } from "@/components/admin/RecentArticles";
+import { QuickActions } from "@/components/admin/QuickActions";
 
 export const metadata: Metadata = {
-  title: 'Dashboard | São Luís em Foco',
-  description: 'Painel administrativo do portal São Luís em Foco',
+  title: "Dashboard | São Luís em Foco",
+  description: "Painel administrativo do portal São Luís em Foco",
 };
 
 export default function AdminDashboard() {
