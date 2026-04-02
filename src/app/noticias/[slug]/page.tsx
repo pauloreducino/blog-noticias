@@ -131,7 +131,7 @@ export default async function ArticlePage({ params }: Props) {
         </nav>
 
         {/* Title overlay */}
-        <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div className="absolute bottom-0 left-0 right-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 bg-gradient-to-t from-black/60 to-transparent">
           <span
             className="font-mono text-[10px] font-semibold tracking-wider uppercase px-2 py-1 rounded border mb-3 inline-block"
             style={{
