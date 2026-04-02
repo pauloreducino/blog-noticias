@@ -62,6 +62,13 @@ body {
   outline-offset: 2px;
 }
 
+/* Emoji color fallback */
+.emoji-color {
+  font-family:
+    "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
+    "EmojiOne Mozilla", "Twemoji Mozilla", "Segoe UI Symbol", sans-serif;
+}
+
 /* Scroll reveal */
 .reveal {
   opacity: 0;
