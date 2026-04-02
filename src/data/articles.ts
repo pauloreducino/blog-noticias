@@ -118,7 +118,7 @@ export const articles: Article[] = [
     author: { id: '1', name: 'Carla Mendonça', slug: 'carla-mendonca', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80&fit=crop&crop=face', role: 'Editora-Chefe' },
     publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 8).toISOString(),
     readTime: 4,
-    imageUrl: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1200&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1427504494785-405a60e2e2c0?w=1200&q=80',
     imageAlt: 'Campus da UFMA em São Luís',
     tags: ['ufma', 'educação', 'pós-graduação', 'são luís'],
     featured: false,

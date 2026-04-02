@@ -101,10 +101,10 @@ export function Footer() {
             </div>
             <div className="mt-6 space-y-1.5">
               {[
-                { label: 'Sobre nós', href: '#' },
-                { label: 'Política Editorial', href: '#' },
-                { label: 'Fale Conosco', href: '#' },
-                { label: 'Anuncie Conosco', href: '#' },
+                { label: 'Sobre nós', href: '/sobre-nos' },
+                { label: 'Política Editorial', href: '/politica-editorial' },
+                { label: 'Fale Conosco', href: '/fale-conosco' },
+                { label: 'Anuncie Conosco', href: '/fale-conosco' },
               ].map((link) => (
                 <Link
                   key={link.href}
