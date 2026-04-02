@@ -4,7 +4,7 @@ export function HeroPolicyEdit() {
   return (
     <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden rounded-2xl">
       <Image
-        src="https://images.unsplash.com/photo-1585776245865-b0bb76fcd6c8?w=1400&q=80"
+        src="/heros/sao-luis-ma-nitght.png"
         alt="Redação jornalística"
         fill
         priority

@@ -4,7 +4,7 @@ export function HeroContact() {
   return (
     <section className="relative w-full h-[500px] md:h-[600px] overflow-hidden rounded-2xl">
       <Image
-        src="https://images.unsplash.com/photo-1486718448742-163732cd3d3c?w=1400&q=80"
+        src="/heros/Rua-Portugal-9-scaled.webp"
         alt="São Luís durante o dia"
         fill
         priority
