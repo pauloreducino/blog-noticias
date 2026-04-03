@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
-import { HeroMagazine } from '@/components/home/HeroMagazine';
-import { LatestSection } from '@/components/home/LatestSection';
 import { CategoriesGrid } from '@/components/home/CategoriesGrid';
-import { MostReadSection } from '@/components/home/MostReadSection';
 import { NewsletterBanner } from '@/components/home/NewsletterBanner';
+import { HomeDynamic } from '@/components/home/HomeDynamic';
 import { Sidebar } from '@/components/ui/Sidebar';
 import { AdBanner } from '@/components/ui/AdBanner';
 import {
@@ -28,13 +26,14 @@ export default async function HomePage() {
     getMostRead(5),
   ]);
 
-  const heroLatest = latest.slice(0, 4);
-  const sectionLatest = latest.slice(0, 6);
-
   return (
     <>
-      {/* Hero */}
-      <HeroMagazine featured={featured} latest={heroLatest} />
+      {/* Hero + Latest + Most Read — merged with CMS articles client-side */}
+      <HomeDynamic
+        staticFeatured={featured}
+        staticLatest={latest}
+        staticMostRead={mostRead}
+      />
 
       {/* Ad leaderboard */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -44,22 +43,12 @@ export default async function HomePage() {
       {/* Categories grid */}
       <CategoriesGrid />
 
-      {/* Latest + Sidebar */}
+      {/* Sidebar with most read */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <LatestSection articles={sectionLatest} />
-          </div>
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 lg:col-start-3">
             <Sidebar mostRead={mostRead} />
           </div>
-        </div>
-      </div>
-
-      {/* Most Read full section */}
-      <div className="bg-surface border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <MostReadSection articles={mostRead} />
         </div>
       </div>
 
