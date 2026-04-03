@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getArticleBySlug, getAllSlugs, getMostRead } from "@/lib/wordpress";
@@ -13,7 +14,6 @@ import {
 } from "@/lib/utils";
 import { ArticleShareBar } from "@/components/article/ArticleShareBar";
 import { ArticleAuthorCard } from "@/components/article/ArticleAuthorCard";
-import { CMSArticlePage } from "@/components/article/CMSArticlePage";
 
 export const revalidate = 60;
 
@@ -56,10 +56,7 @@ export default async function ArticlePage({ params }: Props) {
     getMostRead(5),
   ]);
 
-  // Article not in static data — may be a CMS article saved in localStorage
-  if (!article) {
-    return <CMSArticlePage slug={params.slug} />;
-  }
+  if (!article) notFound();
 
   const { toc, modifiedHtml } = generateToc(article.content);
 

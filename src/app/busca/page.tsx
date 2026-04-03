@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { ArticlesGridDynamic } from '@/components/listing/ArticlesGridDynamic';
+import Link from 'next/link';
+import { ArticleCard } from '@/components/listing/ArticleCard';
 import { Sidebar } from '@/components/ui/Sidebar';
 import { searchArticles, getMostRead } from '@/lib/wordpress';
 import { SITE_NAME } from '@/lib/utils';
@@ -63,8 +64,26 @@ export default async function SearchPage({ searchParams }: Props) {
               <div className="text-5xl mb-4">🔍</div>
               <p className="font-body text-text-muted">Digite algo para buscar notícias.</p>
             </div>
+          ) : results.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="text-5xl mb-4">📭</div>
+              <h2 className="font-headline font-bold text-text-primary text-xl mb-2">
+                Nenhum resultado para &ldquo;{query}&rdquo;
+              </h2>
+              <p className="font-body text-text-muted mb-6">Tente palavras-chave diferentes ou navegue por categorias.</p>
+              <Link
+                href="/noticias"
+                className="inline-block bg-surface border border-white/10 hover:border-cyan/30 text-text-secondary hover:text-text-primary font-body text-sm px-4 py-2 rounded-lg transition-all"
+              >
+                Ver todas as notícias
+              </Link>
+            </div>
           ) : (
-            <ArticlesGridDynamic staticArticles={results} searchQuery={query} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {results.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
           )}
         </div>
 

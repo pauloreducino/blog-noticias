@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
-import { ArticlesGridDynamic } from '@/components/listing/ArticlesGridDynamic';
+import { ArticleCard } from '@/components/listing/ArticleCard';
 import { Pagination } from '@/components/listing/Pagination';
 import { Sidebar } from '@/components/ui/Sidebar';
 import { getArticlesByCategory, getMostRead } from '@/lib/wordpress';
@@ -72,10 +72,22 @@ export default async function CategoryPage({ params, searchParams }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <ArticlesGridDynamic staticArticles={items} categorySlug={params.slug} />
-            <Suspense>
-              <Pagination currentPage={page} totalPages={totalPages} />
-            </Suspense>
+            {items.length === 0 ? (
+              <div className="text-center py-20 text-text-muted font-body">
+                Nenhum artigo nesta categoria ainda.
+              </div>
+            ) : (
+              <>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  {items.map((article) => (
+                    <ArticleCard key={article.id} article={article} />
+                  ))}
+                </div>
+                <Suspense>
+                  <Pagination currentPage={page} totalPages={totalPages} />
+                </Suspense>
+              </>
+            )}
           </div>
           <div className="lg:col-span-1">
             <Sidebar mostRead={mostRead} />
