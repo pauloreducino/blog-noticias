@@ -20,11 +20,11 @@ export default function LoginPage() {
     // Simulate brief processing
     await new Promise((r) => setTimeout(r, 400));
 
-    const success = login(username, password);
-    if (success) {
+    const result = login(username, password);
+    if (result.ok) {
       router.push("/admin");
     } else {
-      setError("Usuário ou senha incorretos.");
+      setError(result.error ?? "Usuário ou senha incorretos.");
     }
     setLoading(false);
   };

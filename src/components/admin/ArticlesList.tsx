@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useCMS } from "@/contexts/CMSContext";
+import { useAuth } from "@/contexts/AuthContext";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -10,13 +11,24 @@ const PER_PAGE = 10;
 
 export function ArticlesList() {
   const { articles, categories, deleteArticle } = useCMS();
+  const { currentUser, hasPermission } = useAuth();
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [sortOrder, setSortOrder] = useState("recent");
   const [page, setPage] = useState(1);
 
+  // Authors see only their own articles; editors/admins see all
+  const viewAll = hasPermission("articles.view_all");
+  const canEditAll = hasPermission("articles.edit_all");
+  const canDeleteAll = hasPermission("articles.delete_all");
+
   const filtered = useMemo(() => {
     let list = [...articles];
+
+    // Restrict to own articles when user doesn't have view_all
+    if (!viewAll && currentUser?.authorId) {
+      list = list.filter((a) => a.author.id === currentUser.authorId);
+    }
 
     if (search.trim()) {
       const q = search.toLowerCase();
@@ -196,20 +208,26 @@ export function ArticlesList() {
                       >
                         👁️
                       </Link>
-                      <Link
-                        href={`/admin/artigos/novo?edit=${article.id}`}
-                        className="p-2 text-text-muted hover:text-cyan transition-colors"
-                        title="Editar"
-                      >
-                        ✏️
-                      </Link>
-                      <button
-                        onClick={() => handleDelete(article.id, article.title)}
-                        className="p-2 text-text-muted hover:text-red-news transition-colors"
-                        title="Excluir"
-                      >
-                        🗑️
-                      </button>
+                      {/* Edit: allowed if owns article OR has edit_all */}
+                      {(canEditAll || article.author.id === currentUser?.authorId) && (
+                        <Link
+                          href={`/admin/artigos/novo?edit=${article.id}`}
+                          className="p-2 text-text-muted hover:text-cyan transition-colors"
+                          title="Editar"
+                        >
+                          ✏️
+                        </Link>
+                      )}
+                      {/* Delete: allowed if owns article OR has delete_all */}
+                      {(canDeleteAll || article.author.id === currentUser?.authorId) && (
+                        <button
+                          onClick={() => handleDelete(article.id, article.title)}
+                          className="p-2 text-text-muted hover:text-red-news transition-colors"
+                          title="Excluir"
+                        >
+                          🗑️
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>

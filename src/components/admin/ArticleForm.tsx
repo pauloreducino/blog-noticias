@@ -3,12 +3,18 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCMS } from "@/contexts/CMSContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function ArticleForm() {
   const { categories, authors, addArticle, updateArticle, getArticleById } = useCMS();
+  const { currentUser, hasPermission } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const editId = searchParams.get("edit");
+
+  // If the current user is an author, lock the author field to their profile
+  const lockedAuthorId = currentUser?.authorId ?? "";
+  const canChooseAuthor = hasPermission("articles.edit_all") || !lockedAuthorId;
 
   const [formData, setFormData] = useState({
     title: "",
@@ -16,7 +22,7 @@ export function ArticleForm() {
     excerpt: "",
     content: "",
     categoryId: "",
-    authorId: "",
+    authorId: lockedAuthorId,
     imageUrl: "",
     imageAlt: "",
     tags: "",
@@ -283,21 +289,28 @@ export function ArticleForm() {
             >
               Autor
             </label>
-            <select
-              id="authorId"
-              name="authorId"
-              value={formData.authorId}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-3 bg-surface border border-white/5 rounded-lg font-body text-text-primary outline-none focus:border-cyan/30 focus:ring-1 focus:ring-cyan/25 cursor-pointer"
-            >
-              <option value="">Selecione um autor...</option>
-              {authors.map((author) => (
-                <option key={author.id} value={author.id}>
-                  {author.name}
-                </option>
-              ))}
-            </select>
+            {canChooseAuthor ? (
+              <select
+                id="authorId"
+                name="authorId"
+                value={formData.authorId}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-surface border border-white/5 rounded-lg font-body text-text-primary outline-none focus:border-cyan/30 focus:ring-1 focus:ring-cyan/25 cursor-pointer"
+              >
+                <option value="">Selecione um autor...</option>
+                {authors.map((author) => (
+                  <option key={author.id} value={author.id}>
+                    {author.name}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <div className="w-full px-4 py-3 bg-elevated border border-white/5 rounded-lg font-body text-text-secondary">
+                {authors.find((a) => a.id === lockedAuthorId)?.name ?? "—"}
+                <span className="ml-2 font-mono text-[9px] text-text-muted">(fixo)</span>
+              </div>
+            )}
           </div>
 
           {/* Read Time */}
