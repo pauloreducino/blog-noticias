@@ -9,38 +9,8 @@ import React, {
 } from "react";
 import type { Article, Author, Category } from "@/types";
 import { articles as initialArticles } from "@/data/articles";
-import { authors } from "@/data/authors";
-import { categories } from "@/data/categories";
-
-interface CMSContextType {
-  // Articles
-  articles: Article[];
-  addArticle: (article: Omit<Article, "id" | "publishedAt" | "views">) => void;
-  updateArticle: (id: string, article: Partial<Article>) => void;
-  deleteArticle: (id: string) => void;
-  getArticleById: (id: string) => Article | undefined;
-
-  // Categories
-  categories: Category[];
-  addCategory: (category: Omit<Category, "id" | "articleCount">) => void;
-  updateCategory: (id: string, category: Partial<Category>) => void;
-  deleteCategory: (id: string) => void;
-
-  // Authors
-  authors: Author[];
-  addAuthor: (author: Omit<Author, "id" | "articleCount">) => void;
-  updateAuthor: (id: string, author: Partial<Author>) => void;
-  deleteAuthor: (id: string) => void;
-
-  // Media
-  mediaFiles: MediaFile[];
-  addMediaFile: (file: Omit<MediaFile, "id" | "uploadedAt">) => void;
-  deleteMediaFile: (id: string) => void;
-
-  // Loading states
-  isLoading: boolean;
-  setIsLoading: (loading: boolean) => void;
-}
+import { authors as initialAuthors } from "@/data/authors";
+import { categories as initialCategories } from "@/data/categories";
 
 interface MediaFile {
   id: string;
@@ -52,56 +22,84 @@ interface MediaFile {
   dimensions?: string;
 }
 
+interface CMSContextType {
+  articles: Article[];
+  addArticle: (article: Omit<Article, "id" | "publishedAt" | "views">) => void;
+  updateArticle: (id: string, article: Partial<Article>) => void;
+  deleteArticle: (id: string) => void;
+  getArticleById: (id: string) => Article | undefined;
+
+  categories: Category[];
+  addCategory: (category: Omit<Category, "id" | "articleCount">) => void;
+  updateCategory: (id: string, category: Partial<Category>) => void;
+  deleteCategory: (id: string) => void;
+
+  authors: Author[];
+  addAuthor: (author: Omit<Author, "id" | "articleCount">) => void;
+  updateAuthor: (id: string, author: Partial<Author>) => void;
+  deleteAuthor: (id: string) => void;
+
+  mediaFiles: MediaFile[];
+  addMediaFile: (file: Omit<MediaFile, "id" | "uploadedAt">) => void;
+  deleteMediaFile: (id: string) => void;
+
+  isLoading: boolean;
+  setIsLoading: (loading: boolean) => void;
+}
+
+// Reads from localStorage on first render (lazy initializer).
+// Falls back to the static seed data if nothing is saved yet.
+function fromStorage<T>(key: string, fallback: T): T {
+  if (typeof window === "undefined") return fallback;
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as T) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+const initialMedia: MediaFile[] = [
+  {
+    id: "1",
+    name: "rua-portugal-9-scaled.webp",
+    url: "/heros/rua-portugal-9-scaled.webp",
+    type: "image",
+    size: "2.3 MB",
+    uploadedAt: "2024-01-15",
+    dimensions: "1920x1080",
+  },
+  {
+    id: "2",
+    name: "sao-luis-ma-nitght.png",
+    url: "/heros/sao-luis-ma-nitght.png",
+    type: "image",
+    size: "1.8 MB",
+    uploadedAt: "2024-01-14",
+    dimensions: "1600x900",
+  },
+];
+
 const CMSContext = createContext<CMSContextType | undefined>(undefined);
 
 export function CMSProvider({ children }: { children: ReactNode }) {
-  const [articles, setArticles] = useState<Article[]>(initialArticles);
-  const [categoriesState, setCategories] = useState<Category[]>(categories);
-  const [authorsState, setAuthors] = useState<Author[]>(authors);
-  const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([
-    {
-      id: "1",
-      name: "rua-portugal-9-scaled.webp",
-      url: "/heros/rua-portugal-9-scaled.webp",
-      type: "image",
-      size: "2.3 MB",
-      uploadedAt: "2024-01-15",
-      dimensions: "1920x1080",
-    },
-    {
-      id: "2",
-      name: "sao-luis-ma-nitght.png",
-      url: "/heros/sao-luis-ma-nitght.png",
-      type: "image",
-      size: "1.8 MB",
-      uploadedAt: "2024-01-14",
-      dimensions: "1600x900",
-    },
-  ]);
+  // Lazy initialisers: state is read from localStorage on first render,
+  // so there is no race between the "load" effect and the "save" effect.
+  const [articles, setArticles] = useState<Article[]>(() =>
+    fromStorage("cms_articles", initialArticles),
+  );
+  const [categoriesState, setCategories] = useState<Category[]>(() =>
+    fromStorage("cms_categories", initialCategories),
+  );
+  const [authorsState, setAuthors] = useState<Author[]>(() =>
+    fromStorage("cms_authors", initialAuthors),
+  );
+  const [mediaFiles, setMediaFiles] = useState<MediaFile[]>(() =>
+    fromStorage("cms_media", initialMedia),
+  );
   const [isLoading, setIsLoading] = useState(false);
 
-  // Load data from localStorage on mount
-  useEffect(() => {
-    const savedArticles = localStorage.getItem("cms_articles");
-    const savedCategories = localStorage.getItem("cms_categories");
-    const savedAuthors = localStorage.getItem("cms_authors");
-    const savedMedia = localStorage.getItem("cms_media");
-
-    if (savedArticles) {
-      setArticles(JSON.parse(savedArticles));
-    }
-    if (savedCategories) {
-      setCategories(JSON.parse(savedCategories));
-    }
-    if (savedAuthors) {
-      setAuthors(JSON.parse(savedAuthors));
-    }
-    if (savedMedia) {
-      setMediaFiles(JSON.parse(savedMedia));
-    }
-  }, []);
-
-  // Save to localStorage whenever data changes
+  // Persist to localStorage whenever state changes
   useEffect(() => {
     localStorage.setItem("cms_articles", JSON.stringify(articles));
   }, [articles]);
@@ -143,12 +141,13 @@ export function CMSProvider({ children }: { children: ReactNode }) {
     setArticles((prev) => prev.filter((article) => article.id !== id));
   };
 
-  const getArticleById = (id: string) => {
-    return articles.find((article) => article.id === id);
-  };
+  const getArticleById = (id: string) =>
+    articles.find((article) => article.id === id);
 
   // Categories CRUD
-  const addCategory = (categoryData: Omit<Category, "id" | "articleCount">) => {
+  const addCategory = (
+    categoryData: Omit<Category, "id" | "articleCount">,
+  ) => {
     const newCategory: Category = {
       ...categoryData,
       id: Date.now().toString(),
