@@ -1,10 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import { categories } from "@/data/categories";
-import { authors } from "@/data/authors";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCMS } from "@/contexts/CMSContext";
 
 export function ArticleForm() {
+  const { categories, authors, addArticle, updateArticle, getArticleById } = useCMS();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get("edit");
+
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -17,30 +22,129 @@ export function ArticleForm() {
     tags: "",
     featured: false,
     breaking: false,
+    readTime: 5,
   });
+  const [saved, setSaved] = useState(false);
+  const [error, setError] = useState("");
+
+  // Load article data when editing
+  useEffect(() => {
+    if (editId) {
+      const article = getArticleById(editId);
+      if (article) {
+        const matchedCategory = categories.find(
+          (c) => c.slug === article.category.slug,
+        );
+        const matchedAuthor = authors.find((a) => a.id === article.author.id);
+        setFormData({
+          title: article.title,
+          slug: article.slug,
+          excerpt: article.excerpt,
+          content: article.content,
+          categoryId: matchedCategory?.id ?? "",
+          authorId: matchedAuthor?.id ?? "",
+          imageUrl: article.imageUrl,
+          imageAlt: article.imageAlt,
+          tags: article.tags.join(", "),
+          featured: article.featured,
+          breaking: article.breaking,
+          readTime: article.readTime,
+        });
+      }
+    }
+  }, [editId, getArticleById, categories, authors]);
+
+  // Auto-generate slug from title
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
+    const slug = title
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-");
+    setFormData((prev) => ({ ...prev, title, slug }));
+  };
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value, type } = e.target;
-    const isCheckbox = type === "checkbox";
-
     setFormData((prev) => ({
       ...prev,
-      [name]: isCheckbox ? (e.target as HTMLInputElement).checked : value,
+      [name]: type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Article data:", formData);
-    // Aqui seria implementada a lógica para salvar no CMS
+    setError("");
+
+    const selectedCategory = categories.find((c) => c.id === formData.categoryId);
+    const selectedAuthor = authors.find((a) => a.id === formData.authorId);
+
+    if (!selectedCategory || !selectedAuthor) {
+      setError("Selecione uma categoria e um autor válidos.");
+      return;
+    }
+
+    const articleData = {
+      slug: formData.slug,
+      title: formData.title,
+      excerpt: formData.excerpt,
+      content: formData.content,
+      category: {
+        name: selectedCategory.name,
+        slug: selectedCategory.slug,
+        color: selectedCategory.color,
+        icon: selectedCategory.icon,
+      },
+      author: {
+        id: selectedAuthor.id,
+        name: selectedAuthor.name,
+        slug: selectedAuthor.slug,
+        avatar: selectedAuthor.avatar,
+        role: selectedAuthor.role,
+      },
+      readTime: Number(formData.readTime),
+      imageUrl: formData.imageUrl,
+      imageAlt: formData.imageAlt,
+      tags: formData.tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean),
+      featured: formData.featured,
+      breaking: formData.breaking,
+    };
+
+    if (editId) {
+      updateArticle(editId, articleData);
+    } else {
+      addArticle(articleData);
+    }
+
+    setSaved(true);
+    setTimeout(() => {
+      router.push("/admin/artigos");
+    }, 1200);
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
+      {saved && (
+        <div className="px-4 py-3 bg-green-live/10 border border-green-live/20 rounded-lg">
+          <p className="font-body text-sm text-green-live">
+            {editId ? "Artigo atualizado" : "Artigo publicado"} com sucesso! Redirecionando...
+          </p>
+        </div>
+      )}
+      {error && (
+        <div className="px-4 py-3 bg-red-news/10 border border-red-news/20 rounded-lg">
+          <p className="font-body text-sm text-red-news">{error}</p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
@@ -57,7 +161,7 @@ export function ArticleForm() {
               id="title"
               name="title"
               value={formData.title}
-              onChange={handleChange}
+              onChange={handleTitleChange}
               placeholder="Digite o título da matéria..."
               required
               className="w-full px-4 py-3 bg-surface border border-white/5 rounded-lg font-body text-text-primary placeholder:text-text-muted outline-none focus:border-cyan/30 focus:ring-1 focus:ring-cyan/25"
@@ -70,7 +174,7 @@ export function ArticleForm() {
               htmlFor="slug"
               className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
             >
-              Slug (URL)
+              Slug (URL) — gerado automaticamente
             </label>
             <input
               type="text"
@@ -90,7 +194,7 @@ export function ArticleForm() {
               htmlFor="excerpt"
               className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
             >
-              Resumo (Excerpt)
+              Resumo
             </label>
             <textarea
               id="excerpt"
@@ -117,10 +221,10 @@ export function ArticleForm() {
               name="content"
               value={formData.content}
               onChange={handleChange}
-              placeholder="Conteúdo da matéria em HTML..."
-              rows={15}
+              placeholder="<p>Conteúdo da matéria...</p>"
+              rows={18}
               required
-              className="w-full px-4 py-3 bg-surface border border-white/5 rounded-lg font-mono text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-cyan/30 focus:ring-1 focus:ring-cyan/25 resize-none"
+              className="w-full px-4 py-3 bg-surface border border-white/5 rounded-lg font-mono text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-cyan/30 focus:ring-1 focus:ring-cyan/25 resize-y"
             />
           </div>
 
@@ -138,7 +242,7 @@ export function ArticleForm() {
               name="tags"
               value={formData.tags}
               onChange={handleChange}
-              placeholder="tag1, tag2, tag3"
+              placeholder="política, maranhão, são luís"
               className="w-full px-4 py-3 bg-surface border border-white/5 rounded-lg font-body text-text-primary placeholder:text-text-muted outline-none focus:border-cyan/30 focus:ring-1 focus:ring-cyan/25"
             />
           </div>
@@ -196,6 +300,26 @@ export function ArticleForm() {
             </select>
           </div>
 
+          {/* Read Time */}
+          <div>
+            <label
+              htmlFor="readTime"
+              className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
+            >
+              Tempo de Leitura (min)
+            </label>
+            <input
+              type="number"
+              id="readTime"
+              name="readTime"
+              value={formData.readTime}
+              onChange={handleChange}
+              min={1}
+              max={60}
+              className="w-full px-4 py-3 bg-surface border border-white/5 rounded-lg font-body text-text-primary outline-none focus:border-cyan/30 focus:ring-1 focus:ring-cyan/25"
+            />
+          </div>
+
           {/* Image URL */}
           <div>
             <label
@@ -205,12 +329,12 @@ export function ArticleForm() {
               URL da Imagem
             </label>
             <input
-              type="url"
+              type="text"
               id="imageUrl"
               name="imageUrl"
               value={formData.imageUrl}
               onChange={handleChange}
-              placeholder="https://..."
+              placeholder="/heros/imagem.jpg"
               className="w-full px-4 py-3 bg-surface border border-white/5 rounded-lg font-mono text-sm text-text-primary placeholder:text-text-muted outline-none focus:border-cyan/30 focus:ring-1 focus:ring-cyan/25"
             />
           </div>
@@ -221,7 +345,7 @@ export function ArticleForm() {
               htmlFor="imageAlt"
               className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2"
             >
-              Descrição da Imagem
+              Descrição da Imagem (Alt)
             </label>
             <input
               type="text"
@@ -229,17 +353,16 @@ export function ArticleForm() {
               name="imageAlt"
               value={formData.imageAlt}
               onChange={handleChange}
-              placeholder="Descrição da imagem..."
+              placeholder="Descrição acessível da imagem..."
               className="w-full px-4 py-3 bg-surface border border-white/5 rounded-lg font-body text-text-primary placeholder:text-text-muted outline-none focus:border-cyan/30 focus:ring-1 focus:ring-cyan/25"
             />
           </div>
 
           {/* Options */}
-          <div className="space-y-3">
-            <label className="block font-mono text-[10px] tracking-widest uppercase text-text-muted mb-2">
+          <div className="bg-surface border border-white/5 rounded-lg p-4 space-y-3">
+            <p className="font-mono text-[10px] tracking-widest uppercase text-text-muted">
               Opções
-            </label>
-
+            </p>
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -249,10 +372,9 @@ export function ArticleForm() {
                 className="w-4 h-4 accent-cyan cursor-pointer"
               />
               <span className="font-body text-sm text-text-secondary">
-                Artigo em Destaque
+                ⭐ Artigo em Destaque
               </span>
             </label>
-
             <label className="flex items-center gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -262,7 +384,7 @@ export function ArticleForm() {
                 className="w-4 h-4 accent-cyan cursor-pointer"
               />
               <span className="font-body text-sm text-text-secondary">
-                Notícia Urgente
+                🚨 Notícia Urgente
               </span>
             </label>
           </div>
@@ -270,9 +392,18 @@ export function ArticleForm() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-cyan text-base font-mono font-semibold text-black rounded-lg hover:bg-cyan/80 transition-all"
+            disabled={saved}
+            className="w-full px-6 py-3 bg-cyan text-black font-mono font-semibold rounded-lg hover:bg-cyan/85 transition-all disabled:opacity-60"
           >
-            Publicar Artigo
+            {editId ? "Salvar Alterações" : "Publicar Artigo"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => router.push("/admin/artigos")}
+            className="w-full px-6 py-3 bg-elevated border border-white/5 text-text-secondary font-mono text-sm rounded-lg hover:text-text-primary transition-colors"
+          >
+            Cancelar
           </button>
         </div>
       </div>

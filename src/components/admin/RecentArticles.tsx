@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { useCMS } from "@/contexts/CMSContext";
 import { formatDistanceToNow } from "date-fns";

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/ui/Header";
-import { Footer } from "@/components/ui/Footer";
-import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { SiteLayout } from "@/components/ui/SiteLayout";
 import { CMSProvider } from "@/contexts/CMSContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -48,12 +47,11 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-base text-text-primary font-body antialiased">
-        <CMSProvider>
-          <ScrollProgress />
-          <Header />
-          <main id="main-content">{children}</main>
-          <Footer />
-        </CMSProvider>
+        <AuthProvider>
+          <CMSProvider>
+            <SiteLayout>{children}</SiteLayout>
+          </CMSProvider>
+        </AuthProvider>
       </body>
     </html>
   );
