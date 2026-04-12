@@ -2,6 +2,37 @@ import type { Article } from '@/types';
 
 export const articles: Article[] = [
   {
+    id: '0',
+    slug: 'guns-n-roses-sao-luis-castelao-abril-2026',
+    title: 'Guns N\' Roses faz show histórico em São Luís no dia 21 de abril no Castelão',
+    excerpt: 'A lendária banda americana traz a turnê "Because What You Want and What You Get Are Two Completely Different Things" ao Maranhão. Raimundos abre o show às 18h30.',
+    content: `<p>São Luís vai vibrar ao som de Axl Rose, Slash e Duff McKagan no próximo <strong>21 de abril de 2026</strong>, feriado de Tiradentes. O Estádio Governador João Castelo, o Castelão, receberá o Guns N' Roses em um show que promete ser um dos maiores eventos de rock da história do Maranhão.</p>
+
+<h2>A turnê</h2>
+<p>A apresentação faz parte da turnê mundial <em>"Because What You Want and What You Get Are Two Completely Different Things"</em>, que percorre o Brasil em 2026. Em apenas uma hora de abertura das vendas, mais de 20 mil ingressos foram comercializados para a data de São Luís, confirmando o apetite dos maranhenses por grandes shows de rock.</p>
+
+<h2>Programação do dia</h2>
+<p>Os portões do Castelão abrem às <strong>16h</strong>. A banda brasileira <strong>Raimundos</strong>, clássico do rock nacional, sobe ao palco às <strong>18h30</strong> para aquecer o público. O Guns N' Roses está previsto para iniciar às <strong>20h</strong>.</p>
+
+<h2>Ingressos</h2>
+<p>Os ingressos estão disponíveis na Bilheteria Digital. Os preços variam entre <strong>R$ 395 (Pista VIP)</strong> e <strong>R$ 1.500 (pacote Experience)</strong>, que inclui acesso a área exclusiva e brindes oficiais da turnê.</p>
+
+<blockquote>Em apenas uma hora, mais de 20 mil ingressos foram vendidos — um recorde para shows em São Luís e prova de que o rock tem força total no Maranhão.</blockquote>
+
+<h2>Como chegar</h2>
+<p>O Castelão fica localizado na Avenida Jerônimo de Albuquerque, no bairro Turu. O público pode acessar o estádio de carro, mototáxi ou pelos ônibus das linhas que passam pela área. Recomenda-se chegar com antecedência devido à grande demanda esperada.</p>`,
+    category: { name: 'Cultura & Lazer', slug: 'cultura-lazer', color: '#A855F7' },
+    author: { id: '3', name: 'Priya Noronha', slug: 'priya-noronha', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80&fit=crop&crop=face', role: 'Repórter Cultural' },
+    publishedAt: new Date(Date.now() - 1000 * 60 * 20).toISOString(),
+    readTime: 4,
+    imageUrl: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1200&q=80',
+    imageAlt: 'Show do Guns N\' Roses no Castelão em São Luís',
+    tags: ['guns n roses', 'show', 'rock', 'castelão', 'são luís', 'cultura'],
+    featured: true,
+    breaking: true,
+    views: 9540,
+  },
+  {
     id: '1',
     slug: 'governo-ma-plano-habitacional-sao-luis-2025',
     title: 'Governo do MA lança plano habitacional para São Luís com 10 mil unidades até 2026',

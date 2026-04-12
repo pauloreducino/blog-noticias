@@ -15,7 +15,7 @@ export function HeroMagazine({ featured, latest }: HeroMagazineProps) {
   if (!main) return null;
 
   return (
-    <section className="grid-pattern relative" aria-label="Destaques principais">
+    <section className="azulejo-pattern relative" aria-label="Destaques principais">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-3 min-h-[480px]">
 

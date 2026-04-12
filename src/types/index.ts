@@ -26,6 +26,7 @@ export interface Category {
   slug: string;
   color: string;
   icon: string;
+  image: string;
   description: string;
   articleCount?: number;
 }

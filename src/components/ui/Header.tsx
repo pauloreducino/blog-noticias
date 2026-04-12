@@ -5,13 +5,47 @@ import { categories } from "@/data/categories";
 
 const navCategories = categories.slice(0, 6);
 
+interface CurrentWeather {
+  temp: number;
+  feelsLike: number;
+  humidity: number;
+  windSpeed: number;
+  description: string;
+  emoji: string;
+}
+
+interface DayForecast {
+  label: string;
+  emoji: string;
+  min: number;
+  max: number;
+  description: string;
+}
+
+function weatherEmoji(id: number): string {
+  if (id >= 200 && id < 300) return "⛈️";
+  if (id >= 300 && id < 400) return "🌦️";
+  if (id >= 500 && id < 600) return "🌧️";
+  if (id >= 600 && id < 700) return "❄️";
+  if (id >= 700 && id < 800) return "🌫️";
+  if (id === 800) return "☀️";
+  if (id === 801) return "🌤️";
+  return "☁️";
+}
+
+const DAY_NAMES = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [weatherOpen, setWeatherOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [shortcut, setShortcut] = useState("Ctrl+K");
   const [temperature, setTemperature] = useState("");
+  const [currentWeather, setCurrentWeather] = useState<CurrentWeather | null>(null);
+  const [forecast, setForecast] = useState<DayForecast[]>([]);
+  const [weatherError, setWeatherError] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -25,28 +59,89 @@ export function Header() {
     }
   }, []);
 
-  // Buscar temperatura em tempo real
+  // Buscar clima atual + previsão 5 dias
   useEffect(() => {
-    fetch("https://wttr.in/S%C3%A3o%20Lu%C3%ADs?format=3")
-      .then((response) => response.text())
-      .then((data) => {
-        // Garante que removemos qualquer prefixo "<local>: " (ex: "São Luís: ")
-        const weather = data.includes(":")
-          ? data.split(":").slice(1).join(":").trim()
-          : data.trim();
-        setTemperature(weather);
+    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
+    if (!apiKey) {
+      setTemperature("🌤️ 38°C");
+      return;
+    }
+
+    const base = "https://api.openweathermap.org/data/2.5";
+    const params = `q=S%C3%A3o+Lu%C3%ADs,BR&appid=${apiKey}&units=metric&lang=pt_br`;
+
+    // Atual
+    fetch(`${base}/weather?${params}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
       })
-      .catch(() => {
-        // Fallback
-        setTemperature("🌤️ +38°C");
+      .then((d) => {
+        const temp = Math.round(d.main.temp);
+        const emoji = weatherEmoji(d.weather[0].id);
+        setTemperature(`${emoji} ${temp}°C`);
+        setCurrentWeather({
+          temp,
+          feelsLike: Math.round(d.main.feels_like),
+          humidity: d.main.humidity,
+          windSpeed: Math.round(d.wind.speed * 3.6), // m/s → km/h
+          description:
+            d.weather[0].description.charAt(0).toUpperCase() +
+            d.weather[0].description.slice(1),
+          emoji,
+        });
+      })
+      .catch((err) => {
+        console.warn("[OpenWeather] Erro ao buscar clima atual:", err.message);
+        setTemperature("🌤️ 38°C");
+        setWeatherError(true);
       });
+
+    // Previsão 5 dias (intervalos de 3h)
+    fetch(`${base}/forecast?${params}`)
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((d) => {
+        // Agrupa por dia (ignora hoje)
+        const today = new Date().toDateString();
+        const byDay: Record<string, { temps: number[]; ids: number[]; descriptions: string[] }> = {};
+
+        for (const item of d.list) {
+          const date = new Date(item.dt * 1000);
+          const key = date.toDateString();
+          if (key === today) continue;
+          if (!byDay[key]) byDay[key] = { temps: [], ids: [], descriptions: [] };
+          byDay[key].temps.push(item.main.temp);
+          byDay[key].ids.push(item.weather[0].id);
+          byDay[key].descriptions.push(item.weather[0].description);
+        }
+
+        const days: DayForecast[] = Object.entries(byDay)
+          .slice(0, 5)
+          .map(([dateStr, { temps, ids, descriptions }]) => {
+            const date = new Date(dateStr);
+            // Usa a condição do período da tarde (mais representativa)
+            const midId = ids[Math.floor(ids.length / 2)];
+            const midDesc = descriptions[Math.floor(descriptions.length / 2)];
+            return {
+              label: DAY_NAMES[date.getDay()],
+              emoji: weatherEmoji(midId),
+              min: Math.round(Math.min(...temps)),
+              max: Math.round(Math.max(...temps)),
+              description:
+                midDesc.charAt(0).toUpperCase() + midDesc.slice(1),
+            };
+          });
+
+        setForecast(days);
+      })
+      .catch(() => {});
   }, []);
 
-  // Lista de notícias breaking (com temperatura dinâmica)
+  // Lista de notícias breaking
   const breakingNews = [
-    temperature
-      ? `Temperatura atual em São Luís: ${temperature}`
-      : "Carregando temperatura...",
     "Governo do MA anuncia plano habitacional com 10 mil unidades",
     "Sampaio Corrêa anuncia três reforços para a Série C",
     "Startup maranhense levanta R$ 5 milhões em rodada seed",
@@ -67,6 +162,17 @@ export function Header() {
           </div>
           <div className="ticker-track overflow-hidden flex-1">
             <div className="ticker-inner flex gap-12 animate-ticker whitespace-nowrap py-1.5 px-4">
+              {/* Item de clima — clicável */}
+              <button
+                onClick={() => setWeatherOpen(true)}
+                className="font-mono text-[11px] text-cyan emoji-color hover:text-cyan/80 transition-colors cursor-pointer underline-offset-2 hover:underline shrink-0"
+              >
+                {temperature
+                  ? `Temperatura em São Luís: ${temperature} — ver previsão`
+                  : "Carregando temperatura..."}
+                <span className="mx-4 text-cyan opacity-50">·</span>
+              </button>
+
               {breakingNews.map((item, i) => (
                 <span
                   key={i}
@@ -122,6 +228,12 @@ export function Header() {
                   {cat.name}
                 </Link>
               ))}
+              <Link
+                href="/autores"
+                className="px-3 py-2 font-mono text-[11px] font-medium text-text-muted hover:text-text-primary uppercase tracking-wider transition-colors rounded-md hover:bg-surface"
+              >
+                Redação
+              </Link>
             </nav>
 
             {/* Right side */}
@@ -310,6 +422,137 @@ export function Header() {
                   Ver todos os resultados →
                 </Link>
               )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Weather modal */}
+      {weatherOpen && (
+        <div className="fixed inset-0 z-[70] flex items-start justify-center pt-[12vh] px-4">
+          <div
+            className="absolute inset-0 bg-base/85 backdrop-blur-md"
+            onClick={() => setWeatherOpen(false)}
+          />
+          <div className="relative w-full max-w-sm bg-surface border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-slide-up">
+            {/* Header do modal */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
+              <div>
+                <p className="font-headline font-bold text-text-primary text-base">
+                  Previsão do Tempo
+                </p>
+                <p className="font-mono text-[10px] text-text-muted tracking-widest uppercase mt-0.5">
+                  São Luís — Maranhão
+                </p>
+              </div>
+              <button
+                onClick={() => setWeatherOpen(false)}
+                className="text-text-muted hover:text-text-primary transition-colors"
+                aria-label="Fechar"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Condições atuais */}
+            {currentWeather ? (
+              <div className="px-5 py-5">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <div className="text-5xl leading-none emoji-color mb-1">
+                      {currentWeather.emoji}
+                    </div>
+                    <p className="font-body text-sm text-text-muted capitalize mt-2">
+                      {currentWeather.description}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-headline font-bold text-text-primary text-5xl leading-none">
+                      {currentWeather.temp}°
+                    </p>
+                    <p className="font-mono text-[11px] text-text-muted mt-1">
+                      Sensação {currentWeather.feelsLike}°C
+                    </p>
+                  </div>
+                </div>
+
+                {/* Detalhes */}
+                <div className="grid grid-cols-2 gap-2 mt-4">
+                  <div className="bg-elevated rounded-xl px-4 py-3">
+                    <p className="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-1">
+                      Umidade
+                    </p>
+                    <p className="font-headline font-bold text-text-primary text-xl">
+                      {currentWeather.humidity}%
+                    </p>
+                  </div>
+                  <div className="bg-elevated rounded-xl px-4 py-3">
+                    <p className="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-1">
+                      Vento
+                    </p>
+                    <p className="font-headline font-bold text-text-primary text-xl">
+                      {currentWeather.windSpeed} km/h
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ) : weatherError ? (
+              <div className="px-5 py-8 flex flex-col items-center gap-2 text-center">
+                <span className="text-3xl">⚠️</span>
+                <p className="font-body text-sm text-text-muted">
+                  Não foi possível carregar o clima.
+                </p>
+                <p className="font-mono text-[10px] text-text-muted">
+                  Chaves novas do OpenWeather levam até 2h para ativar.
+                </p>
+              </div>
+            ) : (
+              <div className="px-5 py-8 flex items-center justify-center gap-2">
+                <svg className="w-4 h-4 text-cyan animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/>
+                </svg>
+                <span className="font-mono text-[11px] text-text-muted">Carregando...</span>
+              </div>
+            )}
+
+            {/* Próximos dias */}
+            {forecast.length > 0 && (
+              <div className="border-t border-white/5 px-5 py-4">
+                <p className="font-mono text-[10px] text-text-muted tracking-widest uppercase mb-3">
+                  Próximos dias
+                </p>
+                <div className="space-y-2">
+                  {forecast.map((day, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center justify-between py-1.5"
+                    >
+                      <div className="flex items-center gap-3 w-24">
+                        <span className="font-mono text-[12px] font-medium text-text-secondary">
+                          {day.label}
+                        </span>
+                      </div>
+                      <span className="text-lg emoji-color">{day.emoji}</span>
+                      <span className="font-body text-xs text-text-muted flex-1 text-center px-2 truncate">
+                        {day.description}
+                      </span>
+                      <div className="flex items-center gap-2 font-mono text-[12px]">
+                        <span className="text-text-primary font-bold">{day.max}°</span>
+                        <span className="text-text-muted">{day.min}°</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="px-5 py-3 bg-elevated border-t border-white/5">
+              <p className="font-mono text-[10px] text-text-muted text-center">
+                Fonte: OpenWeather · Atualizado agora
+              </p>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { categories } from '@/data/categories';
 
 export function CategoriesGrid() {
@@ -18,21 +19,42 @@ export function CategoriesGrid() {
             <Link
               key={cat.slug}
               href={`/categoria/${cat.slug}`}
-              className="group flex flex-col items-center gap-2 p-4 rounded-xl bg-elevated border border-white/5 hover:border-opacity-100 transition-all duration-300 hover:-translate-y-1 text-center"
-              style={{ ['--cat-color' as string]: cat.color }}
+              className="group relative flex flex-col justify-end overflow-hidden rounded-xl aspect-[4/5] transition-transform duration-300 hover:-translate-y-1"
             >
+              {/* Imagem de fundo */}
+              <Image
+                src={cat.image}
+                alt={cat.name}
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+
+              {/* Overlay escuro sempre presente */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/10" />
+
+              {/* Overlay colorido da categoria no hover */}
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-all duration-300 group-hover:scale-110"
-                style={{ backgroundColor: cat.color + '15', border: `1px solid ${cat.color}30` }}
-              >
-                {cat.icon}
-              </div>
-              <div>
-                <p className="font-headline font-semibold text-text-secondary group-hover:text-text-primary text-sm transition-colors leading-tight">
+                className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-300"
+                style={{ backgroundColor: cat.color }}
+              />
+
+              {/* Conteúdo */}
+              <div className="relative z-10 p-3">
+                <div className="text-2xl mb-1.5 emoji-color">{cat.icon}</div>
+                <p className="font-headline font-bold text-white text-sm leading-tight">
                   {cat.name}
                 </p>
-                <p className="font-mono text-[9px] text-text-muted mt-0.5">{cat.articleCount} artigos</p>
+                <p className="font-mono text-[9px] mt-0.5" style={{ color: cat.color }}>
+                  {cat.articleCount} artigos
+                </p>
               </div>
+
+              {/* Borda colorida na base no hover */}
+              <div
+                className="absolute bottom-0 left-0 right-0 h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                style={{ backgroundColor: cat.color }}
+              />
             </Link>
           ))}
         </div>
