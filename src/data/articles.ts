@@ -271,6 +271,141 @@ export const articles: Article[] = [
     breaking: false,
     views: 3541,
   },
+  {
+    id: '12',
+    slug: 'artemis-2-retorno-orion-amerissagem-pacifico-2026',
+    title: 'Cápsula Orion da Artemis 2 amerissa no Pacífico e astronautas retornam à Terra após 10 dias',
+    excerpt: 'Missão histórica da NASA se encerrou com sucesso com a recuperação dos quatro tripulantes pelo USS San Diego. Missão confirmou viabilidade do programa lunar americano.',
+    content: `<p>A cápsula <strong>Orion</strong> da missão <strong>Artemis 2</strong> amerissou com sucesso no <strong>Oceano Pacífico</strong>, ao largo das costas da Califórnia, na tarde desta quinta-feira, encerrando dez dias de uma das viagens espaciais mais importantes da história humana. Os quatro astronautas — Reid Wiseman, Victor Glover, Christina Koch e Jeremy Hansen — foram recuperados em perfeitas condições de saúde pelo navio da Marinha americana <strong>USS San Diego</strong>.</p>
+
+<p>O retorno à Terra foi marcado por uma entrada atmosférica precisa. A cápsula Orion atingiu a atmosfera a aproximadamente <strong>39.000 km/h</strong>, gerando um escudo de plasma em torno do veículo com temperaturas que chegaram a 2.760 °C — mais quente que a superfície do Sol. O escudo térmico da cápsula resistiu sem falhas, confirmando seu desempenho para futuras missões, incluindo a Artemis 3, que prevê pouso na superfície lunar.</p>
+
+<h2>Os dez dias da missão</h2>
+<p>Durante a viagem, a tripulação realizou uma série de experimentos científicos a bordo da cápsula Orion, testou sistemas de suporte de vida e avaliou o comportamento humano em longos períodos fora da esfera de influência gravitacional terrestre. O ponto culminante foi o sobrevoo da Lua no quarto dia, quando a Orion se aproximou a <strong>8.900 km</strong> da superfície lunar — registrando as imagens mais nítidas de nosso satélite natural já capturadas por uma missão tripulada desde 1972.</p>
+
+<figure>
+  <img src="https://images.unsplash.com/photo-1541873676-a18131494184?w=1200&q=80" alt="Astronauta caminhando na superfície lunar durante missão histórica da NASA" />
+  <figcaption>Registro histórico de astronauta na superfície lunar — a Artemis 2 preparou o terreno para que humanos voltem a pisar na Lua na missão Artemis 3 — Crédito: NASA</figcaption>
+</figure>
+
+<blockquote>Ver a Terra do outro lado da Lua, pequena e frágil naquele vazio imenso, mudou algo em mim. Cada um de nós teve que parar e simplesmente absorver aquilo. — Christina Koch, especialista de missão da Artemis 2</blockquote>
+
+<h2>Amerissagem e recuperação</h2>
+<p>A cápsula abriu seus três paraquedas principais a cerca de 2.700 metros de altitude, desacelerando progressivamente até tocar o oceano a aproximadamente <strong>9 m/s</strong>. Equipes de mergulhadores da Marinha americana chegaram à cápsula em menos de dois minutos após o impacto com a água. Os astronautas saíram da cápsula com auxílio da equipe de recuperação e foram transferidos para o USS San Diego, onde passaram por avaliação médica inicial.</p>
+
+<p>A NASA informou que todos os quatro tripulantes apresentaram boa condição física, sem sinais de problemas cardiovasculares ou de adaptação à gravidade — resultado esperado para uma missão de dez dias, consideravelmente mais curta que as estadias de seis meses a bordo da Estação Espacial Internacional.</p>
+
+<figure>
+  <img src="https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1200&q=80" alt="Vista aérea do Oceano Pacífico onde a cápsula Orion da Artemis 2 realizou a amerissagem" />
+  <figcaption>Vista aérea da região do Oceano Pacífico onde a cápsula Orion amerissou — equipes de recuperação da Marinha americana aguardavam na área — Crédito: NASA/US Navy</figcaption>
+</figure>
+
+<h2>O caminho para Artemis 3</h2>
+<p>Com o sucesso da Artemis 2 confirmado, a NASA anunciou que os dados coletados durante a missão serão analisados nos próximos meses para definir o cronograma final da <strong>Artemis 3</strong>, a missão que finalmente levará humanos de volta à superfície da Lua pela primeira vez desde 1972. A previsão atual indica lançamento entre 2027 e 2028, com destino à região polar sul lunar, onde evidências de gelo de água foram identificadas.</p>
+
+<p>A administradora associada da NASA para exploração humana, Cathie Koerner, declarou que "a Artemis 2 provou que o sistema funciona, que nossa tripulação está preparada e que a humanidade está pronta para dar o próximo passo". O programa conta com a parceria de 26 países, incluindo o Brasil por meio da Agência Espacial Brasileira (AEB), que participou do monitoramento orbital da missão a partir da estação de rastreamento em Cuiabá.</p>`,
+    category: { name: 'Brasil & Mundo', slug: 'brasil-mundo', color: '#7B8DB8' },
+    author: { id: '1', name: 'Carla Mendonça', slug: 'carla-mendonca', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80&fit=crop&crop=face', role: 'Editora-Chefe' },
+    publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+    readTime: 8,
+    imageUrl: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=1200&q=80',
+    imageAlt: 'Cápsula Orion da Artemis 2 amerissando no Oceano Pacífico após missão lunar histórica',
+    tags: ['artemis 2', 'nasa', 'lua', 'espaço', 'orion', 'amerissagem', 'brasil e mundo'],
+    featured: true,
+    breaking: false,
+    views: 24180,
+  },
+  {
+    id: '11',
+    slug: 'artemis-2-lancamento-nasa-lua-tripulada-2026',
+    title: 'NASA lança Artemis 2 e envia humanos à órbita da Lua pela primeira vez em 52 anos',
+    excerpt: 'Foguete SLS decolou do Cabo Canaveral carregando quatro astronautas em missão histórica de circum-navegação lunar. Brasileiros acompanharam ao vivo transmissão da NASA.',
+    content: `<p>O foguete <strong>Space Launch System (SLS)</strong> da NASA decolou na madrugada deste sábado do <strong>Complexo de Lançamento 39B</strong>, no Centro Espacial Kennedy, em Cabo Canaveral, na Flórida, carregando a cápsula <strong>Orion</strong> e quatro astronautas em direção à Lua. É a primeira vez desde 1972, durante a missão Apollo 17, que seres humanos viajam à órbita lunar.</p>
+
+<p>A missão <strong>Artemis 2</strong> não tem previsão de pouso — o objetivo é realizar uma trajetória de sobrevoo lunar livre, circum-navegando o satélite natural da Terra a cerca de 8.900 quilômetros de distância da superfície e retornando à Terra em aproximadamente dez dias. É, no entanto, o passo decisivo para a futura missão Artemis 3, que levará humanos de volta ao solo lunar.</p>
+
+<h2>A tripulação histórica</h2>
+<p>O comandante da missão é <strong>Reid Wiseman</strong>, veterano da Estação Espacial Internacional. O piloto é <strong>Victor Glover</strong>, que se torna o primeiro astronauta negro a viajar à Lua. A especialista de missão <strong>Christina Koch</strong> é a primeira mulher a embarcar em uma missão lunar. Completa a equipe o canadense <strong>Jeremy Hansen</strong>, o primeiro não-americano a participar de uma missão lunar — um marco para a Agência Espacial Canadense e para o programa de parceria internacional da NASA.</p>
+
+<figure>
+  <img src="https://images.unsplash.com/photo-1581822261290-991b38693d1b?w=1200&q=80" alt="Astronauta em traje espacial completo antes do embarque na missão Artemis 2" />
+  <figcaption>Astronauta da Artemis 2 em traje de lançamento momentos antes de embarcar na cápsula Orion — Crédito: NASA</figcaption>
+</figure>
+
+<h2>Lançamento sem intercorrências</h2>
+<p>Após dois adiamentos por condições climáticas adversas na semana anterior, o lançamento ocorreu dentro da janela planejada, às 2h17 (horário de Brasília). Cerca de dois minutos após a decolagem, os propulsores sólidos se separaram do foguete. A terceira fase do SLS completou a injeção trans-lunar com sucesso, colocando a cápsula Orion na trajetória correta em direção à Lua.</p>
+
+<p>O Centro de Controle de Missão em Houston monitorou cada etapa em tempo real. "Confirmamos separação do módulo de serviço europeu e ativação dos sistemas de sobrevivência a bordo. A tripulação está bem e os sistemas respondem nominalmente", anunciou a controladora de voo minutos após o lançamento.</p>
+
+<blockquote>Esta é uma noite que a humanidade vai lembrar. Pela primeira vez em mais de cinco décadas, estamos enviando humanos para ver a Terra do ponto de vista da Lua. — Bill Nelson, administrador da NASA</blockquote>
+
+<h2>Repercussão no Brasil</h2>
+<p>A transmissão ao vivo da NASA foi acompanhada por milhões de brasileiros. Planetários, universidades e espaços culturais em todo o país organizaram sessões coletivas de acompanhamento. O Planetário do Ibirapuera, em São Paulo, recebeu mais de 3.000 pessoas durante a madrugada do lançamento. Em São Luís, a UFMA organizou uma transmissão aberta no anfiteatro do Campus do Bacanga.</p>
+
+<figure>
+  <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=1200&q=80" alt="Terra vista do espaço sideral durante a trajetória da missão Artemis 2 rumo à Lua" />
+  <figcaption>Vista da Terra registrada pela câmera externa da cápsula Orion horas após o lançamento, já a caminho da Lua — Crédito: NASA</figcaption>
+</figure>
+
+<h2>Próximas etapas</h2>
+<p>A cápsula Orion levará aproximadamente três dias para chegar às proximidades da Lua. O sobrevoo ocorrerá no quarto dia de missão, quando a tripulação estará a apenas 8.900 km da superfície lunar — a maior proximidade de seres humanos com a Lua desde a Apollo 17. A transmissão ao vivo desse momento está confirmada pela NASA em todas as suas plataformas digitais. O retorno à Terra está previsto para dez dias após o lançamento, com amerissagem no Oceano Pacífico.</p>`,
+    category: { name: 'Brasil & Mundo', slug: 'brasil-mundo', color: '#7B8DB8' },
+    author: { id: '1', name: 'Carla Mendonça', slug: 'carla-mendonca', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80&fit=crop&crop=face', role: 'Editora-Chefe' },
+    publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 12).toISOString(),
+    readTime: 7,
+    imageUrl: 'https://images.unsplash.com/photo-1457364887197-9150188c107b?w=1200&q=80',
+    imageAlt: 'Foguete SLS da NASA decolando do Cabo Canaveral rumo à Lua na missão Artemis 2',
+    tags: ['artemis 2', 'nasa', 'lua', 'espaço', 'astronautas', 'brasil e mundo'],
+    featured: true,
+    breaking: false,
+    views: 18420,
+  },
+  {
+    id: '13',
+    slug: 'coronel-augusta-andrade-ssp-ma-combate-faccoes-sao-luis-2026',
+    title: 'Nova secretária de Segurança do MA declara guerra às facções e promete operações em São Luís e no interior',
+    excerpt: 'Coronel Augusta Andrade assumiu o comando da SSP-MA com foco no crime organizado. São Luís já é a capital mais segura do Nordeste e 8ª do Brasil, aponta ranking do CLP.',
+    content: `<p>A Coronel <strong>Augusta Andrade</strong> assumiu em março a <strong>Secretaria de Estado da Segurança Pública do Maranhão (SSP-MA)</strong> com uma agenda clara: combater as facções criminosas que avançam sobre o estado, com atenção redobrada à capital São Luís e à cidade de Imperatriz, que enfrenta crescimento da criminalidade organizada.</p>
+
+<p>Com mais de 30 anos de serviço público na Polícia Militar do Maranhão, Augusta Andrade se tornou a segunda mulher a alcançar a patente de coronel na corporação e a primeira a comandar a pasta de segurança do estado. Sua nomeação pelo governador <strong>Carlos Brandão</strong> ocorreu em 17 de março e foi recebida com expectativa por agentes de segurança e representantes da sociedade civil.</p>
+
+<figure>
+  <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?w=1200&q=80" alt="Central de monitoramento com telas de vigilância representando sistema de inteligência da SSP-MA" />
+  <figcaption>Expansão do videomonitoramento e uso de drones é uma das prioridades da nova gestão da SSP-MA — Crédito: SSP-MA</figcaption>
+</figure>
+
+<h2>Prioridades da nova gestão</h2>
+<p>Em entrevista ao portal Imirante, a secretária detalhou as frentes de atuação que irá priorizar. O combate ao crime organizado encabeça a lista, com foco em "<strong>asfixiar o braço financeiro das facções</strong>" por meio de operações integradas entre Polícia Militar, Polícia Civil e órgãos de inteligência. A expansão do videomonitoramento e o uso de drones em polos estratégicos como São Luís, Imperatriz e Balsas também estão no plano.</p>
+
+<blockquote>Quem tem que ficar preso são eles, não a população. As pessoas precisam ter liberdade para circular pelas ruas da cidade. — Coronel Augusta Andrade, secretária de Segurança Pública do Maranhão</blockquote>
+
+<p>A secretária também destacou que o interior do Maranhão receberá atenção especial, com previsão de grandes operações em Imperatriz nas próximas semanas. "Imperatriz vai ser um dos primeiros locais onde a gente vai fazer uma grande operação", afirmou.</p>
+
+<h2>São Luís lidera segurança no Nordeste</h2>
+<p>O novo comando da SSP-MA herda um cenário de avanços na capital. Em janeiro de 2026, o <strong>Centro de Liderança Pública (CLP)</strong> divulgou seu Ranking de Competitividade das Capitais, que colocou São Luís na <strong>8ª posição nacional</strong> e na <strong>1ª posição entre as capitais do Nordeste</strong> em indicadores de segurança pública. A capital maranhense ficou à frente de Fortaleza (17ª), Teresina (18ª), Salvador (22ª) e Recife (24ª).</p>
+
+<figure>
+  <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=80" alt="Estátua da Justiça simbolizando o compromisso com a segurança pública no Maranhão" />
+  <figcaption>São Luís conquistou a 1ª posição no Nordeste e 8ª no Brasil no ranking de segurança pública do CLP em 2026 — Crédito: CLP/Divulgação</figcaption>
+</figure>
+
+<p>O governador Carlos Brandão atribuiu o resultado aos investimentos realizados desde 2022: mais de <strong>840 viaturas entregues</strong>, <strong>73 delegacias modernizadas</strong> em todo o estado, reajuste salarial de 20% para policiais militares e bombeiros em 2025, além da adoção de tecnologias de inteligência e monitoramento. "Este resultado reflete os muitos investimentos que fizemos em efetivo, equipamentos, tecnologia e inteligência", disse o governador.</p>
+
+<h2>Carnaval 2026: vitrine da segurança em São Luís</h2>
+<p>O desempenho da segurança pública em São Luís ganhou visibilidade nacional durante o <strong>Carnaval 2026</strong>. Com mais de <strong>5,4 milhões de pessoas</strong> nos circuitos da capital, a operação encerrou sem registro de homicídio, feminicídio, latrocínio ou apreensão de armas de fogo nos circuitos oficiais. Os casos de furto de celulares na orla da Litorânea caíram <strong>40%</strong> em relação ao ano anterior, e os roubos de celulares recuaram <strong>98%</strong>.</p>
+
+<p>Para a nova secretária Augusta Andrade, esses números são um ponto de partida, não de chegada. "O Maranhão avançou muito, mas ainda há muito a fazer. Meu compromisso é com a segurança de cada maranhense, em São Luís e em todos os municípios do estado."</p>`,
+    category: { name: 'Segurança', slug: 'seguranca', color: '#FF5C20' },
+    author: { id: '2', name: 'Rafael Azevedo', slug: 'rafael-azevedo', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80&fit=crop&crop=face', role: 'Repórter de Economia' },
+    publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 18).toISOString(),
+    readTime: 6,
+    imageUrl: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1200&q=80',
+    imageAlt: 'Estátua da Justiça representando segurança pública e combate ao crime no Maranhão',
+    tags: ['segurança', 'ssp-ma', 'augusta andrade', 'facções', 'são luís', 'ranking', 'polícia'],
+    featured: false,
+    breaking: false,
+    views: 7840,
+  },
 ];
 
 export function getArticleBySlug(slug: string): Article | undefined {

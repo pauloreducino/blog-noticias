@@ -167,9 +167,33 @@ body {
   margin: 1.5rem 0;
 }
 
+.article-prose figure {
+  margin: 2rem 0;
+}
+
+.article-prose figure img {
+  margin: 0 0 0.5rem 0;
+}
+
+.article-prose figcaption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: #7B8DB8;
+  text-align: center;
+  padding: 0 1rem;
+  line-height: 1.5;
+}
+
 /* Ticker pause on hover */
 .ticker-track:hover .ticker-inner {
   animation-play-state: paused;
+}
+
+/* Ticker mais rápido em mobile */
+@media (max-width: 640px) {
+  .ticker-inner {
+    animation-duration: 25s !important;
+  }
 }
 
 /* Category color vars per category */
