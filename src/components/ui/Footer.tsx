@@ -128,6 +128,13 @@ export function Footer() {
             As informações deste site têm caráter jornalístico e informativo.
           </p>
         </div>
+
+        {/* Developer credit */}
+        <div className="mt-4 text-center">
+          <p className="font-mono text-[10px] text-text-muted/50">
+            Desenvolvido por Paulo Reducino
+          </p>
+        </div>
       </div>
     </footer>
   );

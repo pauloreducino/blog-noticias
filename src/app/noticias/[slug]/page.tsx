@@ -143,7 +143,7 @@ export default async function ArticlePage({ params }: Props) {
             {article.category.name}
           </span>
           {article.breaking && (
-            <span className="ml-2 inline-flex items-center gap-1.5 bg-red-news px-2 py-1 rounded font-mono text-[10px] font-bold text-white tracking-wider uppercase">
+            <span className="ml-2 inline-flex items-center gap-1.5 bg-red-badge px-2 py-1 rounded font-mono text-[10px] font-bold text-white tracking-wider uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-white animate-live-pulse" />
               Ao Vivo
             </span>

@@ -24,7 +24,7 @@ export function MostReadSection({ articles }: { articles: Article[] }) {
             className="group flex items-start gap-4 p-4 rounded-xl bg-surface border border-white/5 hover:border-cyan/20 transition-all duration-300"
           >
             {/* Rank number */}
-            <span className="font-headline font-bold text-3xl leading-none text-text-muted/20 shrink-0 w-10 text-right pt-1">
+            <span className="font-headline font-bold text-3xl leading-none text-text-muted/20 shrink-0 w-10 text-right pt-1" aria-hidden="true">
               {String(i + 1).padStart(2, '0')}
             </span>
 

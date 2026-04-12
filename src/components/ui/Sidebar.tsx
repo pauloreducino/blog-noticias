@@ -43,7 +43,7 @@ export function Sidebar({ mostRead = [] }: SidebarProps) {
           <ol className="space-y-4">
             {mostRead.slice(0, 5).map((article, i) => (
               <li key={article.id} className="flex gap-3 group">
-                <span className="font-headline font-bold text-2xl text-text-muted/20 leading-none mt-0.5 w-6 shrink-0">
+                <span className="font-headline font-bold text-2xl text-text-muted/20 leading-none mt-0.5 w-6 shrink-0" aria-hidden="true">
                   {String(i + 1).padStart(2, '0')}
                 </span>
                 <div className="flex-1 min-w-0">

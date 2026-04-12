@@ -49,7 +49,7 @@ export function HeroMagazine({ featured, latest }: HeroMagazineProps) {
                     {main.category.name}
                   </span>
                   {main.breaking && (
-                    <span className="inline-flex items-center gap-1.5 bg-red-news/90 px-2 py-1 rounded font-mono text-[10px] font-bold text-white tracking-wider uppercase">
+                    <span className="inline-flex items-center gap-1.5 bg-red-badge px-2 py-1 rounded font-mono text-[10px] font-bold text-white tracking-wider uppercase">
                       <span className="w-1.5 h-1.5 rounded-full bg-white animate-live-pulse" />
                       Ao Vivo
                     </span>

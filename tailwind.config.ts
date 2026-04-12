@@ -18,6 +18,7 @@ const config: Config = {
           glow: 'rgba(0,200,232,0.25)',
         },
         'red-news': '#FF3B5C',
+        'red-badge': '#C4003C',
         'amber-news': '#F5A100',
         'green-live': '#00E08A',
         'purple-culture': '#A855F7',

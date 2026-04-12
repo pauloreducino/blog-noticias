@@ -48,7 +48,7 @@ export function ArticleCard({ article, size = 'default' }: ArticleCardProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-base/90 via-base/30 to-transparent" />
           {article.breaking && (
             <div className="absolute top-3 left-3">
-              <span className="inline-flex items-center gap-1.5 bg-red-news px-2 py-1 rounded font-mono text-[10px] font-bold text-white tracking-wider uppercase">
+              <span className="inline-flex items-center gap-1.5 bg-red-badge px-2 py-1 rounded font-mono text-[10px] font-bold text-white tracking-wider uppercase">
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-live-pulse" />
                 Ao Vivo
               </span>
@@ -82,7 +82,7 @@ export function ArticleCard({ article, size = 'default' }: ArticleCardProps) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         {article.breaking && (
-          <span className="absolute top-2 left-2 inline-flex items-center gap-1 bg-red-news px-2 py-0.5 rounded font-mono text-[9px] font-bold text-white tracking-wider uppercase">
+          <span className="absolute top-2 left-2 inline-flex items-center gap-1 bg-red-badge px-2 py-0.5 rounded font-mono text-[9px] font-bold text-white tracking-wider uppercase">
             <span className="w-1.5 h-1.5 rounded-full bg-white animate-live-pulse" />
             Ao Vivo
           </span>
@@ -127,9 +127,9 @@ export function ArticleMeta({ article }: { article: Article }) {
         <Image src={article.author.avatar} alt={article.author.name} fill className="object-cover" sizes="20px" />
       </div>
       <span className="text-text-muted truncate">{article.author.name}</span>
-      <span className="text-white/20">·</span>
+      <span className="text-white/20" aria-hidden="true">·</span>
       <time dateTime={article.publishedAt}>{formatRelative(article.publishedAt)}</time>
-      <span className="text-white/20">·</span>
+      <span className="text-white/20" aria-hidden="true">·</span>
       <span>{getReadingTimeLabel(article.readTime)}</span>
     </div>
   );
