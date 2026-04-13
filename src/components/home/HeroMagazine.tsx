@@ -61,21 +61,24 @@ export function HeroMagazine({ featured, latest }: HeroMagazineProps) {
                 <p className="font-body text-text-secondary text-sm leading-relaxed mb-4 line-clamp-2 max-w-xl">
                   {main.excerpt}
                 </p>
-                <div className="flex items-center gap-2 font-mono text-[10px] text-text-muted">
-                  <div className="relative w-5 h-5 rounded-full overflow-hidden bg-elevated shrink-0">
-                    <Image
-                      src={main.author.avatar}
-                      alt={main.author.name}
-                      fill
-                      className="object-cover"
-                      sizes="20px"
-                    />
+                <div className="flex items-center justify-between gap-3 font-mono text-[10px] text-text-muted">
+                  <div className="flex items-center gap-1.5 min-w-0 overflow-hidden">
+                    <div className="relative w-5 h-5 rounded-full overflow-hidden bg-elevated shrink-0">
+                      <Image
+                        src={main.author.avatar}
+                        alt={main.author.name}
+                        fill
+                        className="object-cover"
+                        sizes="20px"
+                      />
+                    </div>
+                    <span className="truncate">{main.author.name}</span>
                   </div>
-                  <span>{main.author.name}</span>
-                  <span className="opacity-30">·</span>
-                  <time dateTime={main.publishedAt}>{formatRelative(main.publishedAt)}</time>
-                  <span className="opacity-30">·</span>
-                  <span>{getReadingTimeLabel(main.readTime)}</span>
+                  <div className="flex items-center gap-1.5 shrink-0 text-white/50">
+                    <time dateTime={main.publishedAt}>{formatRelative(main.publishedAt)}</time>
+                    <span className="opacity-40" aria-hidden="true">·</span>
+                    <span>{getReadingTimeLabel(main.readTime)}</span>
+                  </div>
                 </div>
               </div>
             </div>

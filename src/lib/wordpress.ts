@@ -66,6 +66,42 @@ function wpPostToArticle(post: Record<string, unknown>): Article {
   };
 }
 
+function wpUserToAuthor(user: Record<string, unknown>): Author {
+  const acf = (user.acf as Record<string, unknown>) || {};
+  const avatarUrls = (user.avatar_urls as Record<string, string>) || {};
+  const avatar = avatarUrls['96'] || avatarUrls['48'] || '';
+
+  const rawAreas = acf.areas;
+  const areas: string[] = Array.isArray(rawAreas)
+    ? rawAreas.map(String)
+    : typeof rawAreas === 'string' && rawAreas
+    ? rawAreas.split(',').map((a: string) => a.trim()).filter(Boolean)
+    : [];
+
+  const rawSocial = (acf.social as Record<string, string>) || {};
+
+  return {
+    id: String(user.id),
+    name: String(user.name || ''),
+    slug: String(user.slug || ''),
+    role: String(acf.role || 'Repórter'),
+    bio: String(user.description || acf.bio || ''),
+    bioLong: acf.bio_long ? String(acf.bio_long) : undefined,
+    avatar,
+    social: {
+      twitter: rawSocial.twitter || undefined,
+      instagram: rawSocial.instagram || undefined,
+      linkedin: rawSocial.linkedin || undefined,
+      facebook: rawSocial.facebook || undefined,
+      youtube: rawSocial.youtube || undefined,
+      email: rawSocial.email || (user.email ? String(user.email) : undefined),
+    },
+    areas,
+    since: String(acf.since || new Date().getFullYear()),
+    articleCount: Number(acf.article_count) || undefined,
+  };
+}
+
 function decodeHtml(html: string): string {
   return html
     .replace(/&amp;/g, '&')
@@ -174,10 +210,15 @@ export async function getAllSlugs(): Promise<string[]> {
   return (data as Array<{slug: string}>).map((p) => p.slug);
 }
 
-export async function getAuthorBySlug(slug: string): Promise<Author | null> {
-  return fallbackGetAuthor(slug) || null;
+export async function getAllAuthors(): Promise<Author[]> {
+  const data = await wpFetch(`/users?_embed&per_page=100&context=view`);
+  if (!data || !(data as unknown[]).length) return fallbackAuthors;
+  const items = (data as Record<string, unknown>[]).map(wpUserToAuthor);
+  return items.length ? items : fallbackAuthors;
 }
 
-export async function getAllAuthors(): Promise<Author[]> {
-  return fallbackAuthors;
+export async function getAuthorBySlug(slug: string): Promise<Author | null> {
+  const data = await wpFetch(`/users?slug=${slug}&_embed&context=view`);
+  if (!data || !(data as unknown[]).length) return fallbackGetAuthor(slug) || null;
+  return wpUserToAuthor((data as Record<string, unknown>[])[0]);
 }

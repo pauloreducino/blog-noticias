@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { authors } from '@/data/authors';
+import { getAllAuthors } from '@/lib/wordpress';
 import { AdBanner } from '@/components/ui/AdBanner';
 import { SITE_NAME } from '@/lib/utils';
+
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: `Redação | ${SITE_NAME}`,
@@ -66,7 +68,8 @@ const socialIcons: Record<string, { label: string; icon: React.ReactNode }> = {
   },
 };
 
-export default function AuthorsPage() {
+export default async function AuthorsPage() {
+  const authors = await getAllAuthors();
   const editor = authors.find((a) => a.role.toLowerCase().includes('editor'));
   const rest = authors.filter((a) => !a.role.toLowerCase().includes('editor'));
 

@@ -3,8 +3,7 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
-import { getAuthorBySlug, getArticlesByAuthor, getMostRead } from '@/lib/wordpress';
-import { authors } from '@/data/authors';
+import { getAuthorBySlug, getArticlesByAuthor, getMostRead, getAllAuthors } from '@/lib/wordpress';
 import { ArticleCard } from '@/components/listing/ArticleCard';
 import { Pagination } from '@/components/listing/Pagination';
 import { Sidebar } from '@/components/ui/Sidebar';
@@ -13,6 +12,7 @@ import { SITE_NAME } from '@/lib/utils';
 export const revalidate = 60;
 
 export async function generateStaticParams() {
+  const authors = await getAllAuthors();
   return authors.map((a) => ({ slug: a.slug }));
 }
 
