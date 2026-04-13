@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Article } from '@/types';
@@ -8,7 +9,7 @@ interface ArticleCardProps {
   size?: 'default' | 'featured' | 'mini';
 }
 
-export function ArticleCard({ article, size = 'default' }: ArticleCardProps) {
+function ArticleCardBase({ article, size = 'default' }: ArticleCardProps) {
   if (size === 'mini') {
     return (
       <Link href={`/noticias/${article.slug}`} className="flex gap-3 group">
@@ -134,3 +135,5 @@ export function ArticleMeta({ article }: { article: Article }) {
     </div>
   );
 }
+
+export const ArticleCard = memo(ArticleCardBase);
