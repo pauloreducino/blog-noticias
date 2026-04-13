@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+
+export const revalidate = 60;
 import { HeroAbout } from '@/components/about/HeroAbout';
 import { AboutContent } from '@/components/about/AboutContent';
 import { SITE_NAME } from '@/lib/utils';

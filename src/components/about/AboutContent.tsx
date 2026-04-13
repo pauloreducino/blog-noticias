@@ -1,4 +1,23 @@
-export function AboutContent() {
+import Image from 'next/image';
+import Link from 'next/link';
+import { getAllAuthors } from '@/lib/wordpress';
+
+const roleColor: Record<string, string> = {
+  'Editora-Chefe': '#FF3B5C',
+  'Editor-Chefe': '#FF3B5C',
+  'Repórter de Economia': '#F5A100',
+  'Repórter Cultural': '#A855F7',
+  'Repórter': '#00C8E8',
+  'Colunista': '#00E08A',
+};
+
+function getRoleColor(role: string) {
+  return roleColor[role] ?? '#00C8E8';
+}
+
+export async function AboutContent() {
+  const authors = await getAllAuthors();
+
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
@@ -95,14 +114,63 @@ export function AboutContent() {
 
       {/* Equipe */}
       <div>
-        <h2 className="font-headline font-bold text-3xl md:text-4xl text-text-primary mb-12 text-center">
-          Conheca a <span className="text-cyan">Equipe</span>
+        <h2 className="font-headline font-bold text-3xl md:text-4xl text-text-primary mb-4 text-center">
+          Conheça a <span className="text-cyan">Equipe</span>
         </h2>
         <p className="font-body text-text-secondary text-center max-w-2xl mx-auto mb-12">
           Profissionais dedicados ao jornalismo de qualidade, à informação
           verificada e ao compromisso com a verdade. Conheça quem trabalha nos
           bastidores do São Luís em Foco.
         </p>
+
+        <div className="flex flex-wrap justify-center gap-4">
+          {authors.map((author) => (
+            <Link
+              key={author.slug}
+              href={`/autor/${author.slug}`}
+              className="group flex flex-col items-center text-center bg-surface border border-white/5 rounded-2xl p-5 hover:border-cyan/20 transition-all duration-300 hover:-translate-y-0.5 w-40 sm:w-44"
+            >
+              <div
+                className="relative w-20 h-20 rounded-full overflow-hidden mb-3 ring-2 transition-all duration-300 group-hover:ring-4"
+                style={{ ['--tw-ring-color' as string]: getRoleColor(author.role) + '50' }}
+              >
+                <Image
+                  src={author.avatar}
+                  alt={author.name}
+                  fill
+                  sizes="80px"
+                  className="object-cover"
+                />
+              </div>
+              <span
+                className="inline-block font-mono text-[9px] tracking-widest uppercase px-2 py-0.5 rounded-full mb-1.5"
+                style={{ backgroundColor: getRoleColor(author.role) + '20', color: getRoleColor(author.role) }}
+              >
+                {author.role}
+              </span>
+              <h3 className="font-headline font-bold text-text-primary text-sm leading-tight group-hover:text-cyan transition-colors">
+                {author.name}
+              </h3>
+              {author.bio && (
+                <p className="font-body text-[11px] text-text-muted leading-relaxed mt-1.5 line-clamp-2">
+                  {author.bio}
+                </p>
+              )}
+            </Link>
+          ))}
+        </div>
+
+        <div className="text-center mt-10">
+          <Link
+            href="/autores"
+            className="inline-flex items-center gap-2 font-headline font-bold text-sm px-6 py-3 rounded-xl border border-cyan/30 text-cyan hover:bg-cyan/10 transition-colors"
+          >
+            Ver toda a redação
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </section>
   );

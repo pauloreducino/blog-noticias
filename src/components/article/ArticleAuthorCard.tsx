@@ -33,7 +33,7 @@ export async function ArticleAuthorCard({ author }: Props) {
 
           {/* Social links */}
           {fullAuthor?.social && (
-            <div className="flex gap-2 mt-3">
+            <div className="flex flex-wrap gap-2 mt-3">
               {fullAuthor.social.twitter && (
                 <a href={fullAuthor.social.twitter} target="_blank" rel="noopener noreferrer"
                   className="px-3 py-1.5 rounded-lg bg-elevated border border-white/8 hover:border-cyan/30 font-mono text-[10px] text-text-muted hover:text-text-primary transition-all">
